@@ -9,10 +9,11 @@ import Header from "./components/topdown/Header";
 import Register from "./components/register";
 import Logout from "./components/LoginPage/logout";
 import Profile from "./components/profile";
+import Users from "./components/users";
+import Login from "./components/LoginPage/login";
+import MoviesSoon from "./components/moviesSoon";
+import ReservationMap from "./components/ReservationPage/reservationMap";
 
-function Login() {
-    return null;
-}
 
 function App() {
 
@@ -23,13 +24,14 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          {/*<Route path='/' element={<EventListPublic/>}></Route>
-          <Route path='/' element={<EventListPublic/>}></Route>*/}
+          {/*<Route path='/' element={<EventListPublic/>}></Route>*/}
+          <Route path='/' element={<MoviesSoon/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/logout' element={<Logout/>}></Route>
           <Route path='/profile/:username' element={<Profile/>}></Route>
-            <Route path='/users' element={</>}></Route>
+          <Route path='/users' element={<Users/>}></Route>
+          <Route path='/reservation/:roomid' element={<ReservationMap/>}></Route>
           {/*<Route path='/eventprofile/:id' element={<Eventprofile/>}></Route>
           <Route path='/edit/:id' element={<EditEvent/>}></Route>*/}
         </Routes>

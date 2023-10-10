@@ -100,12 +100,10 @@ const userslice = createSlice({
             })
             .addCase(fetchUsers.fulfilled,(state, action)=>{
                 state.registerstatus = 'success';
+                state.user = action.payload[0];
             })
             .addCase(fetchUsers.rejected,(state, action)=>{
                 state.registerstatus = 'failure';
-            })
-            .addCase(fetchUsers.fulfilled, (state, action)=>{
-                state.user = action.payload[0]
             })
     }
 })
