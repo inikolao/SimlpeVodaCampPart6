@@ -13,6 +13,12 @@ import Users from "./components/users";
 import Login from "./components/LoginPage/login";
 import MoviesSoon from "./components/moviesSoon";
 import ReservationMap from "./components/ReservationPage/reservationMap";
+import Search from "./components/moviePages/search";
+import Tickets from "./components/Ticketing/tickets";
+import History from "./components/history";
+import PayementsView from "./components/PaymentsPages/payementsView";
+import BookAMovie from "./components/ReservationPage/bookAMovie";
+import MoviePresentation from "./components/moviePages/moviePresentation";
 
 
 function App() {
@@ -26,12 +32,18 @@ function App() {
         <Routes>
           {/*<Route path='/' element={<EventListPublic/>}></Route>*/}
           <Route path='/' element={<MoviesSoon/>}></Route>
+          <Route path='/search' element={<Search/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/logout' element={<Logout/>}></Route>
           <Route path='/profile/:username' element={<Profile/>}></Route>
           <Route path='/users' element={<Users/>}></Route>
           <Route path='/reservation/:roomid' element={<ReservationMap/>}></Route>
+          <Route path='/tickets' element={<Tickets/>}></Route>
+          <Route path='/history' element={<History/>}></Route>
+          <Route path='/payments' element={<PayementsView/>}></Route>
+          <Route path='/book' element={<BookAMovie/>}></Route>
+          <Route path='/movieview/:mvid' element={<MoviePresentation/>}></Route>
           {/*<Route path='/eventprofile/:id' element={<Eventprofile/>}></Route>
           <Route path='/edit/:id' element={<EditEvent/>}></Route>*/}
         </Routes>

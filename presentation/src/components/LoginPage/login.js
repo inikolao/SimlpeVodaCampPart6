@@ -43,10 +43,11 @@ function LoginPage() {
     }
 
     return (
+        <div className="page-single movie_list">
         <div className="container">
             <p style={{color:'red'}}>{error && error}</p>
-            <h2>Login Page</h2>
-            <form method="post" onSubmit={handleSubmit}>
+            <h2 class="sb-title">Login Page</h2>
+            <form class="form-style-1" method="post" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Username:</label>
                     <input type="text" className="form-control" id="username" name="username"  onChange={(event)=>setuser({...user, [event.target.name]:event.target.value})} placeholder="Enter username"/>
@@ -58,6 +59,7 @@ function LoginPage() {
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
+        </div>
         </div>);
 }
 

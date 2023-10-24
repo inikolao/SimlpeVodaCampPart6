@@ -33,6 +33,7 @@ function MoviesSoon() {
 
     return (
         <div>
+            <div className="page-single movie_list">
             <div id="navigation" className="text-center">
                 <button
                     data-testid="button-restart"
@@ -69,6 +70,7 @@ function MoviesSoon() {
                        {/* <img src={require(`../../../rawFiles/${moovielist[index].files[0].file1}.jpg`)} height="600"/>*/}
                     </div> : ''
             }
+            </div>
         </div>
     );
 }

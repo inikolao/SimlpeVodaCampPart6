@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Link, Navigate, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {fetchUserByUsername} from "../reduxLib/userLib";
+import AdminPage from "./UserPage/adminPage";
+import ProfilePage from "./UserPage/profilePage";
 
 function Profile() {
     let {username} = useParams();
@@ -22,26 +24,40 @@ function Profile() {
         if(user.id === 0)
             dispatch(fetchUserByUsername(username));
         else{
-            console.log('else')
-            console.log(user)
-            setuserprofile(user)
+            console.log('else');
+            console.log(user);
+            setuserprofile(user);
+           // alert("us : "+user.id);
         }
-    },[user])
+    },[user,dispatch]);
+
+    function checkAdmin(username,email,id)
+    {
+
+
+        if(username ==='admin')
+        {
+           return <AdminPage />;
+        }
+        else
+        {
+          return  <ProfilePage {...{username,email,id}} />;
+        }
+    }
+
     return (
         <div className='container mt-4'>
             <div className='row'>
                 <div className='col-md-4'>
                     {
                         //isUserLoggedIn()  ?
-                        userprofile ?
-                            <div>
-                                <h1>User Profile</h1>
-                                <p>Name : {userprofile.username}</p>
-                                <p>Email : {userprofile.email}</p>
-                            </div> : ''
-
+                       userprofile ?
+                           (
+                               checkAdmin(user.username,user.email,user.id)
+                           ):''
                         // <Navigate to='/login'/>
                     }
+
                 </div>
                 <div className='col-md-8'>
                     <Outlet/>

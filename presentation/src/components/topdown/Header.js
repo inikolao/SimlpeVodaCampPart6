@@ -32,6 +32,11 @@ function Header() {
                                     Home
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" aria-current="page" to="/search">
+                                    Search
+                                </NavLink>
+                            </li>
                             {
                                 !isLoggedIn &&
                                 <li className="nav-item">
@@ -48,6 +53,30 @@ function Header() {
                                     </NavLink>
                                 </li>
                             }
+                            {//onClick={()=>dispatch(logoutUser())}
+                                isLoggedIn &&
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/tickets" >
+                                        Tickets
+                                    </NavLink>
+                                </li>
+                            }
+                            {//onClick={()=>dispatch(logoutUser())}
+                                isLoggedIn &&
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/payments" >
+                                        My payments
+                                    </NavLink>
+                                </li>
+                            }
+                            {//onClick={()=>dispatch(logoutUser())}
+                                isLoggedIn &&
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/history" >
+                                        My History
+                                    </NavLink>
+                                </li>
+                            }
 
                             {//onClick={()=>dispatch(logoutUser())}
                                 isLoggedIn &&
@@ -59,9 +88,9 @@ function Header() {
                             }
                             {
                                 isLoggedIn &&
-                                <div><NavLink className="nav-link" to={`/profile/${username}`}>
+                                <li className="nav-item"><NavLink className="nav-link" to={`/profile/${username}`}>
                                     {username}
-                                </NavLink></div>
+                                </NavLink></li>
                             }
 
 

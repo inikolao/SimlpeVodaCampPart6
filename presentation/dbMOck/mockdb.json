@@ -73,11 +73,11 @@
       "id": 7
     },
     {
-      "username": "admin",
-      "name": "Ioannis",
-      "surname": "Nikolaou",
-      "city": "Paris",
-      "email": "Giannhspc@gmail.com",
+      "username": "user",
+      "name": "asasas",
+      "surname": "assasa",
+      "city": "Athens",
+      "email": "sasasas",
       "password": "sa",
       "id": 8
     }
@@ -165,21 +165,18 @@
       "name": "Big Hall",
       "Rooms": 3,
       "cityId": 1
-
     },
     {
       "id": 2,
       "name": "xaos Hall",
       "Rooms": 1,
       "cityId": 2
-
     },
     {
       "id": 3,
       "name": "kaka Hall",
       "Rooms": 1,
       "cityId": 4
-
     }
   ],
   "Rooms": [
@@ -188,35 +185,30 @@
       "theater": 1,
       "seats": 30,
       "movieId": 4
-
     },
     {
       "id": 2,
       "theater": 1,
       "seats": 30,
       "movieId": 3
-
     },
     {
       "id": 3,
       "theater": 1,
       "seats": 30,
       "movieId": 5
-
     },
     {
       "id": 4,
       "theater": 2,
       "seats": 30,
       "movieId": 2
-
     },
     {
       "id": 5,
       "theater": 3,
       "seats": 30,
       "movieId": 5
-
     }
   ],
   "Cities": [
@@ -224,25 +216,21 @@
       "id": 1,
       "name": "Athens",
       "Theaters": 9
-
     },
     {
       "id": 2,
       "name": "Patras",
       "Theaters": 4
-
     },
     {
       "id": 3,
       "name": "Rodos",
       "Theaters": 1
-
     },
     {
       "id": 4,
       "name": "London",
       "Theaters": 10
-
     }
   ]
 }

@@ -52,10 +52,11 @@ function Register() {
 
 
     return (
+        <div className="page-single movie_list">
         <div className="container">
-            <h1>Register</h1>
+            <h1 class="sb-title">Register</h1>
             <p style={{color:'red'}}>{error && error}</p>
-            <form>
+            <form class="form-style-1">
                 <div className="form-group">
                     <label htmlFor="username">Username:</label>
                     <input type="text" className="form-control" id="username" placeholder="Username" name="username" value={user.username} onChange={(event)=>setuser({...user, [event.target.name]:event.target.value})}/>
@@ -93,6 +94,7 @@ function Register() {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
             </form>
+        </div>
         </div>
     );
 }
