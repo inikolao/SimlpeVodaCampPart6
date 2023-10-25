@@ -1,0 +1,236 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "name": "John",
+      "surname": "Nk",
+      "city": "Athens",
+      "email": "nikolao@iapps.com",
+      "password": "sa"
+    },
+    {
+      "id": 2,
+      "username": "kati2",
+      "name": "John",
+      "surname": "Tester",
+      "city": "Athens",
+      "email": "tester@iapps.com",
+      "password": "sa"
+    },
+    {
+      "id": 3,
+      "username": "kati3",
+      "name": "typicode",
+      "surname": "smsl",
+      "city": "Athens",
+      "email": "kati@kdkd.com",
+      "password": "sa"
+    },
+    {
+      "id": 4,
+      "username": "kati4",
+      "name": "typicode",
+      "surname": "da",
+      "city": "Athens",
+      "email": "kati@kdkd.com",
+      "password": "sa"
+    },
+    {
+      "id": 4,
+      "username": "kati5",
+      "name": "typicode",
+      "surname": "dsad",
+      "city": "Athens",
+      "email": "kati@kdkd.com",
+      "password": "sa"
+    },
+    {
+      "id": 5,
+      "username": "kati5",
+      "name": "typicode",
+      "surname": "dsad",
+      "city": "Athens",
+      "email": "kati@kdkd.com",
+      "password": "sa"
+    },
+    {
+      "id": 6,
+      "username": "kati6",
+      "name": "typicode",
+      "surname": "dasd",
+      "city": "Athens",
+      "email": "kati@kdkd.com",
+      "password": "sa"
+    },
+    {
+      "username": "xyz",
+      "name": "a",
+      "surname": "s",
+      "city": "London",
+      "email": "Giannhspc@gmail.com",
+      "password": "sa",
+      "id": 7
+    },
+    {
+      "username": "user",
+      "name": "asasas",
+      "surname": "assasa",
+      "city": "Athens",
+      "email": "sasasas",
+      "password": "sa",
+      "id": 8
+    }
+  ],
+  "movies": [
+    {
+      "id": 2,
+      "title": "some comment",
+      "description": "some event",
+      "datetime": "20-3-2023 20:30",
+      "location": "bar tiki",
+      "roomId": 1,
+      "city": "Athens",
+      "files": [
+        {
+          "file1": "img2",
+          "file2": "/somethinhg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "some comment",
+      "description": "some event",
+      "datetime": "20-5-2023 20:30",
+      "location": "bar tiki",
+      "roomId": 2,
+      "city": "rodos",
+      "files": [
+        {
+          "file1": "img1",
+          "file2": "img2"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "some comment",
+      "description": "some event",
+      "datetime": "20-4-2023 20:30",
+      "location": "bar tiki",
+      "roomId": 2,
+      "city": "patras",
+      "files": [
+        {
+          "file1": "img2",
+          "file2": "img1"
+        }
+      ]
+    },
+    {
+      "title": "aa",
+      "description": "aa",
+      "datetime": "2023-09-25T00:34",
+      "location": "stathis bar",
+      "roomId": 1,
+      "city": "Patras",
+      "files": [
+        {
+          "file1": "img2",
+          "file2": "img1"
+        }
+      ],
+      "id": 5
+    },
+    {
+      "title": "karnavali",
+      "description": "sad",
+      "datetime": "2023-09-13T22:57",
+      "location": "cscs",
+      "roomId": 3,
+      "city": "Patras",
+      "files": [
+        {
+          "file1": "img2",
+          "file2": "img1"
+        }
+      ],
+      "id": 7
+    }
+  ],
+  "Theaters": [
+    {
+      "id": 1,
+      "name": "Big Hall",
+      "Rooms": 3,
+      "cityId": 1
+    },
+    {
+      "id": 2,
+      "name": "xaos Hall",
+      "Rooms": 1,
+      "cityId": 2
+    },
+    {
+      "id": 3,
+      "name": "kaka Hall",
+      "Rooms": 1,
+      "cityId": 4
+    }
+  ],
+  "Rooms": [
+    {
+      "id": 1,
+      "theater": 1,
+      "seats": 30,
+      "movieId": 4
+    },
+    {
+      "id": 2,
+      "theater": 1,
+      "seats": 30,
+      "movieId": 3
+    },
+    {
+      "id": 3,
+      "theater": 1,
+      "seats": 30,
+      "movieId": 5
+    },
+    {
+      "id": 4,
+      "theater": 2,
+      "seats": 30,
+      "movieId": 2
+    },
+    {
+      "id": 5,
+      "theater": 3,
+      "seats": 30,
+      "movieId": 5
+    }
+  ],
+  "Cities": [
+    {
+      "id": 1,
+      "name": "Athens",
+      "Theaters": 9
+    },
+    {
+      "id": 2,
+      "name": "Patras",
+      "Theaters": 4
+    },
+    {
+      "id": 3,
+      "name": "Rodos",
+      "Theaters": 1
+    },
+    {
+      "id": 4,
+      "name": "London",
+      "Theaters": 10
+    }
+  ]
+}
