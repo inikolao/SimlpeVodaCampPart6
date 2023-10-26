@@ -1,5 +1,6 @@
 package iniko.voda.backendapi.DTO;
 
+import iniko.voda.backendapi.DTO.Utils.seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,6 @@ public class MoviesShow {
     private float ticketPrice;
     private int seatsBooked;
     private int seatsAvailable;
-    private List<Map<Integer,Boolean>> seatList;
+    @OneToMany
+    private List<seat> seatStatusList;
 }
