@@ -1,12 +1,14 @@
 package iniko.voda.backendapi.Services.Initialisers;
 
-import iniko.voda.backendapi.DTO.User;
-import iniko.voda.backendapi.Services.DB.UserService;
+import iniko.voda.backendapi.DTO.*;
+import iniko.voda.backendapi.DTO.Utils.Seat;
+import iniko.voda.backendapi.Services.DB.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,19 @@ public class BasicInitialize {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GenreService genreService;
+    @Autowired
+    private MfileService mfileService;
+    @Autowired
+    private MovieService movieService;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private MoviesShowService moviesShowService;
+    @Autowired
+    private CinemasService cinemasService;
+
     public BasicInitialize() {
 
     }
@@ -26,10 +41,151 @@ public class BasicInitialize {
     public BasicInitialize(int prTps,int prCts,int ordCts,int flTps,int fils) {
 
         InitializeUsers();
+        InitialiseGenres();
+        InitialiseMovies();
+
+    }
+    private void InitialiseGenres()
+    {
+        System.out.println("Generating Genres\n");
+        Genre genre;
+        for (int i = 0; i < 10; i++) {
+            genre=new Genre();
+            genre.setName((GenRandomString());
+            genreService.CreateGenrer(genre);
+
+        }
+
+
+    }
+    private void InitialiseMovies()
+    {
+        System.out.println("Generating Movie\n");
+        Movie movie;
+        for (int i = 0; i <30 ; i++) {
+            movie=new Movie();
+            movie.setMovieGenre(CreateRandomGenreList(GenRandomInt(4)));
+            movie.setDuration(GenRandomInt(200));
+            movie.setDescription(GenRandomString());
+            movie.setLanguage("EN");
+            movie.setRating(GenRandomInt(6));
+            movie.setPlot(GenRandomString());
+            movie.setFiles(null);
+            movie.setMoviesProps(new MoviesProps(1,"something"+GenRandomString()));
+            movie.setFiles(createMfileList());
+            movieService.CreateMovie(movie);
+
+        }
+
+    }
+    private void InitialiseCinemas()
+    {
+        System.out.println("Generating Cinema\n");
+        Cinema cinema;
+        int rooms;
+        for (int i = 0; i < 20; i++) {
+            cinema=new Cinema();
+            cinema.setName(GenRandomString()+"_PLex");
+            cinema.setCity("someCity_"+GenRandomString());
+            cinema.setAdress("cinemaDE"+GenRandomInt());
+            int sv=GenRandomInt();
+            rooms=sv==0?1:sv;
+            cinema.setRoomsNum(rooms); //how many rooms has the cinema?
+            cinema.setMoviesShows(CreateMovieshowList(rooms));//so the shows will correspond to rooms
+            cinemasService.CreateCinema(cinema);
+
+        }
+
+    }
+    private void InitialiseRooms()
+    {
+        System.out.println("Generating Rooms\n");
+        Room room;
+        for (int i = 0; i < 25; i++) {
+            room=new Room();
+            room.setSeats(65);
+            room.setRoomCinemaNo(GenRandomInt(3));
+            room.set
+
+        }
+
+
+    }
+    private void InitialiseMovieShows()
+    {
+        System.out.println("Generating MovieShows\n");
+        MoviesShow moviesShow;
+        for (int i = 0; i < 20; i++) {
+            Room room=roomService.GetRoomById(i);
+            moviesShow=new MoviesShow();
+            moviesShow.setMovie(GetRandomMovie());
+            moviesShow.setDateTime(GetNowL());
+            moviesShow.setSeatsBooked(0);
+            moviesShow.setSeatsAvailable(65);
+            moviesShow.setSeatStatusList(CreateSeatList(room.getRoomID()));
+            moviesShow.setTicketPrice((float)GenRandomInt(16));
+            moviesShow.setRoom(room);
+            moviesShowService.CreateMovieShow(moviesShow);
+        }
 
     }
 
 
+
+
+
+    private List<MFile> createMfileList()
+    {
+        MFile file;
+        List<MFile> files=new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            file =new MFile(1,GenRandomString());
+            files.add(new MFile(1,GenRandomString()));
+            mfileService.CreateMfile(file);
+        }
+
+        return files;
+
+    }
+
+    private List<Genre> CreateRandomGenreList(int size)
+    {
+        List<Genre> genres= genreService.GetALlGenrer();
+        List<Genre> rgenres=new ArrayList<>();
+        for (int siz = 0; siz < size; siz++) {
+            rgenres.add(genres.get(GenRandomInt(genres.size())));
+
+        }
+        return rgenres;
+    }
+    private Movie GetRandomMovie()
+    {
+        return movieService.GetAllMovies().get(GenRandomInt(movieService.GetAllMovies().size()));
+    }
+    private List<Seat> CreateSeatList(int roomID)
+    {
+        Seat seat;
+        List <Seat> seats=new ArrayList<>();
+        Room room=roomService.GetRoomById(roomID);
+        for (int i = 0; i < room.getSeats(); i++) {
+            seat=new Seat(i,i,false,roomService.GetRoomById(roomID));
+            seats.add(seat);
+
+        }
+        return seats;
+    }
+    private List<MoviesShow> CreateMovieshowList(int CinemaRooms)
+    {
+        MoviesShow moviesShow;
+        List<MoviesShow> moviesShows=new ArrayList<>();
+        for (int i = 0; i < CinemaRooms; i++) {
+            moviesShow=new MoviesShow();
+            moviesShow.setMovie(GetRandomMovie());
+            moviesShow.setDateTime(GetNowL());
+            moviesShow.setSeatsBooked(0);
+            moviesShow.setSeatsAvailable(65);
+        }
+    }
 
 
 
@@ -38,7 +194,10 @@ public class BasicInitialize {
 
     public void InitializeUsers()
     {
+        System.out.println("Generating Users\n");
+        System.out.println("Generating Admin\n");
         createAdmin();
+        System.out.println("Generating Test User\n");
         createMainTest();
         createGuest();
         User user;
@@ -136,6 +295,16 @@ public class BasicInitialize {
         // using nextInt()
         return rand.nextInt(upperbound);
     }
+    private Integer GenRandomInt(int upperbound)
+    {
+        Random rand = new Random();
+        // Setting the upper bound to generate the
+        // random numbers in specific range
+        //int upperbound = uperbound;
+        // Generating random values from 0 - 24
+        // using nextInt()
+        return rand.nextInt(upperbound);
+    }
     private Integer GenRandomPrice()
     {
         Random rand = new Random();
@@ -151,6 +320,11 @@ public class BasicInitialize {
         Date dateOne = new Date();
         Instant inst = Instant.now();
         return dateOne.from(inst);
+    }
+    private LocalDateTime GetNowL()
+    {
+        Instant inst = Instant.now();
+        return LocalDateTime.from(inst);
     }
 }
 

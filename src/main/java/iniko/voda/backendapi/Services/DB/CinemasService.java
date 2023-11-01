@@ -20,7 +20,7 @@ public class CinemasService {
         cinemaRepo.findAll().forEach(cinemas::add);
         return cinemas;
     }
-    public void CreateMovie(Cinema cinema)
+    public void CreateCinema(Cinema cinema)
     {
         cinemaRepo.save(cinema);
     }

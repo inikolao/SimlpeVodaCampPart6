@@ -1,16 +1,14 @@
 package iniko.voda.backendapi.DTO;
 
-import iniko.voda.backendapi.DTO.Utils.seat;
+import iniko.voda.backendapi.DTO.Utils.Seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor
 @Getter
@@ -32,5 +30,5 @@ public class MoviesShow {
     private int seatsBooked;
     private int seatsAvailable;
     @OneToMany
-    private List<seat> seatStatusList;
+    private List<Seat> seatStatusList;
 }

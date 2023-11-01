@@ -25,4 +25,9 @@ public class RoomService {
     {
         roomsRepo.save(room);
     }
+
+    public Room GetRoomById(int id)
+    {
+        return roomsRepo.getRoomByRoomID(id);
+    }
 }
