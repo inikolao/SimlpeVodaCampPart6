@@ -21,6 +21,11 @@ public class BackendApiApplication {
         //BasicInitialize initialize=new BasicInitialize(20,15,15,30,40);
 
         initialize.InitializeUsers();
+        initialize.InitialiseGenres();
+        initialize.InitialiseMovies();
+        initialize.InitialiseCinemas();
+        initialize.InitialiseRooms();
+        initialize.InitialiseMovieShows();
     }
 
 }

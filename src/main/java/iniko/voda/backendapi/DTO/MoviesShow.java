@@ -22,8 +22,10 @@ public class MoviesShow {
     private int movieShowsID;
 
     @OneToOne
+    @JoinColumn(name = "showMovie_id")
     private Movie movie;
     @OneToOne
+    @JoinColumn(name = "showroom_id")
     private Room room;
     private LocalDateTime dateTime;
     private float ticketPrice;
@@ -31,4 +33,6 @@ public class MoviesShow {
     private int seatsAvailable;
     @OneToMany
     private List<Seat> seatStatusList;
+    private boolean isComming;
+    private boolean isPublic;
 }

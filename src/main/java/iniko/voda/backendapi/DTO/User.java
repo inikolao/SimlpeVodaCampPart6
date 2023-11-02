@@ -33,6 +33,8 @@ public class User implements UserDetails {
     private Boolean IsActive;
     private Date LastLogIn;
     private Date DateCreated;
+    @OneToOne
+    private LastActions lastActions;
 
     public User() {
     }
