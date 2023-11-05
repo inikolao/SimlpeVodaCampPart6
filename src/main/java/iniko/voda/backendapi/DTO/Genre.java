@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +19,17 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int genreID;
+    private int id;
 
     private String name;
 
+    @ManyToOne//(mappedBy = "Genres")
+    //@JoinColumn(name = "movies_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Movie movie;
+
+    public Genre(String name, Movie movie) {
+        this.name = name;
+        this.movie = movie;
+    }
 }

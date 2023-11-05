@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +19,31 @@ public class Cinema {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int cinemaID;
+    private int id;
     private String name;
     private String city;
-    private String adress;
+    private String address;
     private int roomsNum;
     @OneToMany
-    private List<MoviesShow> moviesShows;
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<Room> rooms;
+    @OneToMany
+    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
+    //@JoinColumn(name = "MovieShows_id")
+    private Set<MoviesShow> moviesShows;
+
+    public Cinema(String name, String city, String address, int roomsNum, Set<MoviesShow> moviesShows) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.roomsNum = roomsNum;
+        this.moviesShows = moviesShows;
+    }
+
+    public Cinema(String name, String city, String address, int roomsNum) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.roomsNum = roomsNum;
+    }
 }

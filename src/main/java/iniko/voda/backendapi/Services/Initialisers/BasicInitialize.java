@@ -9,10 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 public class BasicInitialize {
@@ -47,10 +44,10 @@ public class BasicInitialize {
         InitialiseGenres();
         InitialiseMovies();
         InitialiseCinemas();
-        InitialiseRooms();
         InitialiseMovieShows();
 
     }
+
     public void InitialiseGenres()
     {
         System.out.println("Generating Genres\n");
@@ -59,177 +56,131 @@ public class BasicInitialize {
             genre=new Genre();
             genre.setName(GenRandomString());
             genreService.CreateGenrer(genre);
-
         }
 
 
     }
+
     public void InitialiseMovies()
     {
         System.out.println("Generating Movie\n");
         Movie movie;
-        for (int i = 0; i <30 ; i++) {
+        for (int i = 0; i < 10; i++) {
             movie=new Movie();
-            movie.setMovieGenre(CreateRandomGenreList(GenRandomInt(4)));
-            movie.setDuration(GenRandomInt(200));
             movie.setDescription(GenRandomString());
-            movie.setLanguage("EN");
-            movie.setRating(GenRandomInt(6));
             movie.setPlot(GenRandomString());
-            movie.setFiles(null);
-            //MoviesProps moviesProps=new MoviesProps(1,"something"+GenRandomString());
-            movie.setMoviesProps(null);
-            //movie.setFiles(createMfileList());
+            Set<Genre> genres=new HashSet<>();
+            for (int j = 0; j < GenRandomInt(4); j++) {
+                genres.add(new Genre(GenRandomString(),movie));
+            }
+            movie.setMovieGenre(genres);
+            movie.setMoviesProps(new MoviesProps());
+            movie.setLanguage("US");
+            movie.setDuration(GenRandomInt(250));
+            movie.setRating(GenRandomInt(6));
+            Set<MFile> files=new HashSet<>();
+            for (int j = 0; j < 3; j++) {
+                files.add(new MFile(GenRandomString()));
+            }
+            movie.setFiles(files);
             movieService.CreateMovie(movie);
 
         }
+
 
     }
     public void InitialiseCinemas()//crate cinemas no shows yet
     {
         System.out.println("Generating Cinema\n");
         Cinema cinema;
-        int rooms;
         for (int i = 0; i < 20; i++) {
-            cinema=new Cinema();
-            cinema.setName(GenRandomString()+"_PLex");
-            cinema.setCity("someCity_"+GenRandomString());
-            cinema.setAdress("cinemaDE"+GenRandomInt());
-            int sv=GenRandomInt();
-            rooms=sv==0?1:sv;
-            cinema.setRoomsNum(rooms); //how many rooms has the cinema?
-           // cinema.setMoviesShows(CreateMovieshowList(rooms));//so the shows will correspond to rooms
-            cinema.setMoviesShows(null);
-            cinemasService.CreateCinema(cinema);
-
-        }
-
-    }
-    public void InitialiseRooms()//create rooms for any cinema no shows
-    {
-        System.out.println("Generating Rooms\n");
-        Room room;
-        Cinema cinema;
-        List<Cinema> cinemas=cinemasService.GetAllCinemas();
-        for (int i = 0; i < cinemas.size(); i++) {
-            cinema=cinemas.get(i);
-            for (int j = 0; j < cinema.getRoomsNum(); j++) {
+            int sv=GenRandomInt(5);
+            Set<MoviesShow> moviesShows = new HashSet<>();
+            cinema=new Cinema(); //GenRandomString()+"_Plex","Athens",GenRandomString()+" 88 12234",sv==0?1:sv,new HashSet<>())
+            cinema.setName(GenRandomString()+"_Plex");
+            cinema.setCity("Athers");
+            cinema.setAddress(GenRandomString()+" 88 12234");
+            cinema.setRoomsNum(sv==0?1:sv);
+            Room room;
+            int dk=sv==0?1:sv;
+            Set<Room> rooms=new HashSet<>();
+            for (int j = 0; j < dk; j++) {
+                Set<MoviesShow> moviesShowsr = new HashSet<>();
                 room=new Room();
                 room.setCinema(cinema);
                 room.setRoomCinemaNo(j+1);
                 room.setSeats(65);
-                room.setMoviesShow(null);
-                roomService.CreateRoom(room);
+                Seat seat;
+                Set<Seat> seats=new HashSet<>();
+                for (int k = 0; k < 65; k++) {
+                    seat=new Seat();
+                    seat=new Seat();
+                    seat.setSeatNo(j+1);
+                    seat.setReserved(false);
+                    seat.setRoomSeat(room);
+                    seats.add(seat);
+                }
+                room.setSeatStatusList(seats);
+                room.setMoviesShowsRoom(moviesShowsr);
+                rooms.add(room);
             }
-
-        }
-
-
-    }
-    public void InitialiseMovieShows()
-    {
-        System.out.println("Generating MovieShows\n");
-        MoviesShow moviesShow;
-        List<Room> rooms=roomService.GetAllRooms();
-        for (Room room:rooms) {
-            moviesShow=new MoviesShow();
-            moviesShow.setMovie(GetRandomMovie());
-            moviesShow.setRoom(room);
-            moviesShow.setDateTime(GetNowL());
-            moviesShow.setSeatsBooked(0);
-            moviesShow.setSeatsAvailable(65);
-            moviesShow.setSeatStatusList(CreateSeatList(room.getRoomID()));
-            moviesShow.setTicketPrice((float)GenRandomInt(16));
-            moviesShow.setPublic(true);
-            moviesShow.setComming(false);
-            room.setMoviesShow(moviesShow);
-            Cinema cinema=room.getCinema();
-            List<MoviesShow> moviesShowList=new ArrayList<>();
-            moviesShowList.add(moviesShow);
-            cinema.setMoviesShows(moviesShowList);
-            moviesShowService.CreateMovieShow(moviesShow);
-            roomService.CreateRoom(room);
-            //Association with cinema lists
-
+            cinema.setRooms(rooms);
+            cinema.setMoviesShows(moviesShows);
             cinemasService.CreateCinema(cinema);
 
         }
 
-        for (int i = 0; i < 5; i++) {
+
+    }
+
+    public void InitialiseMovieShows()
+    {
+        System.out.println("Generating MovieShows\n");
+        MoviesShow moviesShow;
+        List<Room> rooms=roomService.GetAllRoomsList();
+        List<Movie> movies=movieService.GetAllMoviesList();
+        for (int i = 0; i < rooms.size(); i++)
+        {
             moviesShow=new MoviesShow();
-            moviesShow.setMovie(GetRandomMovie());
-            moviesShow.setRoom(null);
+            int sv=GenRandomInt(movies.size());
+            moviesShow.setMovie(movies.get(sv==0?1:sv));
+            moviesShow.setRoom(rooms.get(i));
             moviesShow.setDateTime(GetNowL());
+            moviesShow.setTicketPrice((float)GenRandomInt(16));
             moviesShow.setSeatsBooked(0);
             moviesShow.setSeatsAvailable(65);
-            moviesShow.setSeatStatusList(null);
-            moviesShow.setTicketPrice((float)GenRandomInt(16));
             moviesShow.setPublic(true);
             moviesShow.setComming(false);
             moviesShowService.CreateMovieShow(moviesShow);
         }
+        Room room;
+        Cinema cinema;
+        List<Cinema> cinemas=cinemasService.GetAllCinemas();
+        List<MoviesShow> moviesShows=moviesShowService.GetAllShows();
+        for (int i = 0; i < moviesShows.size(); i++) {
+            int mvR=moviesShows.get(i).getRoom().getId();
 
+            for (int j = 0; j < rooms.size(); j++) {
+                Set<MoviesShow> shows=new HashSet<>();
+                if(mvR==)
 
-    }
+            }
 
-
-
-
-
-    private List<MFile> createMfileList()
-    {
-        MFile file;
-        List<MFile> files=new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            file =new MFile(1,GenRandomString());
-            files.add(new MFile(1,GenRandomString()));
-            mfileService.CreateMfile(file);
+            room=moviesShows.get(i).getRoom();
+            room.getMoviesShowsRoom().add(moviesShows.get(i));
+            roomService.CreateRoom(room);
+        }
+        for (int i = 0; i <  moviesShows.size(); i++) {
+            cinema=moviesShows.get(i).getRoom().getCinema();
+            cinema.getMoviesShows().add(moviesShows.get(i));
+            cinemasService.CreateCinema(cinema);
         }
 
-        return files;
-
     }
 
-    private List<Genre> CreateRandomGenreList(int size)
-    {
-        List<Genre> genres= genreService.GetALlGenrer();
-        List<Genre> rgenres=new ArrayList<>();
-        for (int siz = 0; siz < size; siz++) {
-            rgenres.add(genres.get(GenRandomInt(genres.size())));
 
-        }
-        return rgenres;
-    }
-    private Movie GetRandomMovie()
-    {
-        return movieService.GetAllMovies().get(GenRandomInt(movieService.GetAllMovies().size()));
-    }
-    private List<Seat> CreateSeatList(int roomID)
-    {
-        Seat seat;
-        List <Seat> seats=new ArrayList<>();
-        Room room=roomService.GetRoomById(roomID);
-        for (int i = 0; i < room.getSeats(); i++) {
-            seat=new Seat(i,i,false,roomService.GetRoomById(roomID));
-            seatService.CreateSeat(seat);
-            seats.add(seat);
 
-        }
-        return seats;
-    }
-    private List<MoviesShow> CreateMovieshowList(int CinemaRooms)
-    {
-        MoviesShow moviesShow;
-        List<MoviesShow> moviesShows=new ArrayList<>();
-        for (int i = 0; i < CinemaRooms; i++) {
-            moviesShow=new MoviesShow();
-            moviesShow.setMovie(GetRandomMovie());
-            moviesShow.setDateTime(GetNowL());
-            moviesShow.setSeatsBooked(0);
-            moviesShow.setSeatsAvailable(65);
-        }
-        return moviesShows;
-    }
+
 
 
 

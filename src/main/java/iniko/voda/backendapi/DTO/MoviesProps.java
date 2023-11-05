@@ -19,7 +19,7 @@ public class MoviesProps {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int moviePropsID;
+    private int id;
 
     private String someprops;
 }

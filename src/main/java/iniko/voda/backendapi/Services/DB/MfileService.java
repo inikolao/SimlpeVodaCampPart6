@@ -15,7 +15,7 @@ public class MfileService {
 
     public void CreateMfile(MFile file)
     {
-        mfileRepo.save(file);
+        mfileRepo.saveAndFlush(file);
     }
     public List<MFile> GetAllMfiles()
     {

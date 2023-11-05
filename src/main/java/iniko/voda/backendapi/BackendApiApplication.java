@@ -24,7 +24,6 @@ public class BackendApiApplication {
         initialize.InitialiseGenres();
         initialize.InitialiseMovies();
         initialize.InitialiseCinemas();
-        initialize.InitialiseRooms();
         initialize.InitialiseMovieShows();
     }
 

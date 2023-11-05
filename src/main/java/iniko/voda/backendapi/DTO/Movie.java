@@ -5,10 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Getter
@@ -19,20 +23,22 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int movieID;
+    private int id;
 
     private String description;
     private String plot;
-    @OneToMany
-    @JoinColumn(name = "movieGenres_id")
-    private List<Genre> movieGenre;
+   @OneToMany//(mappedBy = "movie",cascade = CascadeType.ALL)
+   @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<Genre> movieGenre;
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private MoviesProps moviesProps;
     private String language;
     private int duration; //in minutes
     private int rating;
     @OneToMany
     @JoinColumn(name = "movieFile_id")
-    private List<MFile> files;
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<MFile> files;
 
 }

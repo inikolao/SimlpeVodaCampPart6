@@ -18,7 +18,10 @@ import javax.persistence.Id;
 public class MFile {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int fileID;
+    private int id;
     private String path;
 
+    public MFile(String path) {
+        this.path = path;
+    }
 }

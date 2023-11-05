@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoomsRepo extends JpaRepository<Room,Integer> {
 
-    Room getRoomByRoomID(int id);
+    Room getRoomById(int id);
 }

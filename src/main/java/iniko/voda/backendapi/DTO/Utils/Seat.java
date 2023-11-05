@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -12,14 +13,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Getter
-@Entity
+@Entity(name="Seats")
 public class Seat {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int seatID;
+    private int id;
     private int seatNo;
     private boolean isReserved;
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    //@JoinColumn(name = "rooms_id")
+    //@Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Room roomSeat;
 
 }
