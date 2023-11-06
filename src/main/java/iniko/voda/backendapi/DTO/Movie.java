@@ -24,7 +24,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-
+    private String Title;
     private String description;
     private String plot;
    @OneToMany//(mappedBy = "movie",cascade = CascadeType.ALL)

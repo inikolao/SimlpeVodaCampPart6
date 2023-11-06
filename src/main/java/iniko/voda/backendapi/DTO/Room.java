@@ -23,7 +23,6 @@ public class Room {
     private int id;
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    //@JoinColumn(name = "cinemas_cinemaid")
     private Cinema cinema;
     private int roomCinemaNo;
     private int seats;
@@ -31,6 +30,6 @@ public class Room {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Seat> seatStatusList;
     @OneToMany
-    //@JoinColumn(name = "moviesShows_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<MoviesShow> moviesShowsRoom;
 }

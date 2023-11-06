@@ -1,6 +1,6 @@
 package iniko.voda.backendapi.DTO;
 
-
+import iniko.voda.backendapi.DTO.Utils.Seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,28 +8,24 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.time.LocalDateTime;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@Entity(name = "Genres")
-public class Genre {
-
+public class Reservation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-
-    private String name;
-
-    @ManyToOne//(mappedBy = "Genres")
-    @JoinTable(name = "movies_genres")
+    private LocalDateTime creationTimestamp;
+    @OneToOne
+    private User owner;
+    @OneToOne
+    private Seat seat;
+    @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Movie movie;
+    private Payment payment;
 
-    public Genre(String name, Movie movie) {
-        this.name = name;
-        this.movie = movie;
-    }
 }

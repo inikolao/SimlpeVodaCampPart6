@@ -125,7 +125,6 @@ public class BasicInitialize {
                 rooms.add(room);
             }
             cinema.setRooms(rooms);
-            cinema.setMoviesShows(moviesShows);
             cinemasService.CreateCinema(cinema);
 
         }
@@ -139,11 +138,14 @@ public class BasicInitialize {
         MoviesShow moviesShow;
         List<Room> rooms=roomService.GetAllRoomsList();
         List<Movie> movies=movieService.GetAllMoviesList();
+        Room room;
+        Cinema cinema;
         for (int i = 0; i < rooms.size(); i++)
         {
             moviesShow=new MoviesShow();
             int sv=GenRandomInt(movies.size());
             moviesShow.setMovie(movies.get(sv==0?1:sv));
+            room=rooms.get(i);
             moviesShow.setRoom(rooms.get(i));
             moviesShow.setDateTime(GetNowL());
             moviesShow.setTicketPrice((float)GenRandomInt(16));
@@ -153,28 +155,11 @@ public class BasicInitialize {
             moviesShow.setComming(false);
             moviesShowService.CreateMovieShow(moviesShow);
         }
-        Room room;
-        Cinema cinema;
-        List<Cinema> cinemas=cinemasService.GetAllCinemas();
-        List<MoviesShow> moviesShows=moviesShowService.GetAllShows();
-        for (int i = 0; i < moviesShows.size(); i++) {
-            int mvR=moviesShows.get(i).getRoom().getId();
 
-            for (int j = 0; j < rooms.size(); j++) {
-                Set<MoviesShow> shows=new HashSet<>();
-                if(mvR==)
 
-            }
 
-            room=moviesShows.get(i).getRoom();
-            room.getMoviesShowsRoom().add(moviesShows.get(i));
-            roomService.CreateRoom(room);
-        }
-        for (int i = 0; i <  moviesShows.size(); i++) {
-            cinema=moviesShows.get(i).getRoom().getCinema();
-            cinema.getMoviesShows().add(moviesShows.get(i));
-            cinemasService.CreateCinema(cinema);
-        }
+
+
 
     }
 

@@ -27,23 +27,5 @@ public class Cinema {
     @OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Room> rooms;
-    @OneToMany
-    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
-    //@JoinColumn(name = "MovieShows_id")
-    private Set<MoviesShow> moviesShows;
 
-    public Cinema(String name, String city, String address, int roomsNum, Set<MoviesShow> moviesShows) {
-        this.name = name;
-        this.city = city;
-        this.address = address;
-        this.roomsNum = roomsNum;
-        this.moviesShows = moviesShows;
-    }
-
-    public Cinema(String name, String city, String address, int roomsNum) {
-        this.name = name;
-        this.city = city;
-        this.address = address;
-        this.roomsNum = roomsNum;
-    }
 }

@@ -6,10 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Users")
@@ -35,6 +32,10 @@ public class User implements UserDetails {
     private Date DateCreated;
     @OneToOne
     private LastActions lastActions;
+    @OneToMany
+    private Set<Payment> payments;
+    @OneToMany
+    private Set<Reservation> reservations;
 
     public User() {
     }
@@ -141,20 +142,46 @@ public class User implements UserDetails {
         DateCreated = dateCreated;
     }
 
+    public LastActions getLastActions() {
+        return lastActions;
+    }
+
+    public void setLastActions(LastActions lastActions) {
+        this.lastActions = lastActions;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "UserID=" + userID +
-                ", Username='" + username + '\'' +
+                "userID=" + userID +
+                ", username='" + username + '\'' +
                 ", Password='" + Password + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Surname='" + Surname + '\'' +
                 ", Mobile='" + Mobile + '\'' +
-               // ", Orders=" + Orders +
-                ", IsAdmin=" + isAdmin +
+                ", isAdmin=" + isAdmin +
                 ", IsActive=" + IsActive +
                 ", LastLogIn=" + LastLogIn +
                 ", DateCreated=" + DateCreated +
+                ", lastActions=" + lastActions +
+                ", payments=" + payments +
+                ", reservations=" + reservations +
                 '}';
     }
 
