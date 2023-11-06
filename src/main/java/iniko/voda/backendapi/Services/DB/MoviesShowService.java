@@ -15,6 +15,7 @@ public class MoviesShowService {
     @Autowired
     private MoviesShowRepo moviesShowRepo;
 
+    @Transactional
     public List<MoviesShow> GetAllShows()
     {
         List<MoviesShow> moviesShows= new ArrayList<>();

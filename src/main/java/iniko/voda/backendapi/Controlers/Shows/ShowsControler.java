@@ -4,6 +4,7 @@ import iniko.voda.backendapi.DTO.MoviesShow;
 import iniko.voda.backendapi.Services.DB.MoviesShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ShowsControler {
     @Autowired
     private MoviesShowService moviesShowService;
 
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<MoviesShow> GetAllShows()
     {
         return moviesShowService.GetAllShows();

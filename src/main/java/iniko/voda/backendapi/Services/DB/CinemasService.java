@@ -4,6 +4,7 @@ import iniko.voda.backendapi.DTO.Cinema;
 import iniko.voda.backendapi.Repos.CinemaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,10 @@ public class CinemasService {
     @Autowired
     private CinemaRepo cinemaRepo;
 
+    @Transactional
     public List<Cinema> GetAllCinemas()
     {
-        List<Cinema> cinemas=new ArrayList<>();
-        cinemaRepo.findAll().forEach(cinemas::add);
-        return cinemas;
+        return cinemaRepo.findAll();
     }
     public void CreateCinema(Cinema cinema)
     {

@@ -93,10 +93,11 @@ public class BasicInitialize {
     {
         System.out.println("Generating Cinema\n");
         Cinema cinema;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 3; i++) {
             int sv=GenRandomInt(5);
             Set<MoviesShow> moviesShows = new HashSet<>();
             cinema=new Cinema(); //GenRandomString()+"_Plex","Athens",GenRandomString()+" 88 12234",sv==0?1:sv,new HashSet<>())
+           // cinema.setId(i);
             cinema.setName(GenRandomString()+"_Plex");
             cinema.setCity("Athers");
             cinema.setAddress(GenRandomString()+" 88 12234");
@@ -107,7 +108,8 @@ public class BasicInitialize {
             for (int j = 0; j < dk; j++) {
                 Set<MoviesShow> moviesShowsr = new HashSet<>();
                 room=new Room();
-                room.setCinema(cinema);
+                //room.setId(j);
+                //room.setCinema(cinema);
                 room.setRoomCinemaNo(j+1);
                 room.setSeats(65);
                 Seat seat;
@@ -117,7 +119,7 @@ public class BasicInitialize {
                     seat=new Seat();
                     seat.setSeatNo(j+1);
                     seat.setReserved(false);
-                    seat.setRoomSeat(room);
+                    //seat.setRoomSeat(room);
                     seats.add(seat);
                 }
                 room.setSeatStatusList(seats);
@@ -143,10 +145,11 @@ public class BasicInitialize {
         for (int i = 0; i < rooms.size(); i++)
         {
             moviesShow=new MoviesShow();
+           // moviesShow.setId(i);
             int sv=GenRandomInt(movies.size());
             moviesShow.setMovie(movies.get(sv==0?1:sv));
             room=rooms.get(i);
-            moviesShow.setRoom(rooms.get(i));
+            //moviesShow.setRoom(rooms.get(i));
             moviesShow.setDateTime(GetNowL());
             moviesShow.setTicketPrice((float)GenRandomInt(16));
             moviesShow.setSeatsBooked(0);

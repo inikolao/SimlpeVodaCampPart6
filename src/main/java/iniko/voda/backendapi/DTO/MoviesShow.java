@@ -25,10 +25,10 @@ public class MoviesShow {
     @OneToOne
    // @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Movie movie;
-    @OneToOne
+/*    @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     //@JoinColumn(name = "showroom_id")
-    private Room room;
+    private Room room*/;
     private LocalDateTime dateTime;
     private float ticketPrice;
     private int seatsBooked;
