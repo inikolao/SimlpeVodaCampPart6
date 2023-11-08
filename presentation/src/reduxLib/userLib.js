@@ -24,7 +24,7 @@ export const fetchUsers = createAsyncThunk('fetch/usersall',async()=>{
 
 export const loginUser = createAsyncThunk('login/User',async(user)=>{
     console.log(user, 'logging in')
-    let response = await fetch(`http://localhost:3001/users?username=${user.username}`);
+    let response = await fetch(`http://localhost:8080/users/?username=${user.username}`);
     let fetchuser = await response.json()
     // console.log(fetchuser)
     if(fetchuser.length > 0 && fetchuser[0].password === user.password)
@@ -35,7 +35,7 @@ export const loginUser = createAsyncThunk('login/User',async(user)=>{
 })
 
 export const fetchUserByUsername = createAsyncThunk('fetch/User',async(username)=>{
-    let response = await fetch(`http://localhost:3001/users/${username}`)
+    let response = await fetch(`http://localhost:8080/users/${username}`)
     // console.log('fetch user', response)
     return  response.json()
 
@@ -43,11 +43,13 @@ export const fetchUserByUsername = createAsyncThunk('fetch/User',async(username)
 
 export const registerUser = createAsyncThunk('register/user', async(user)=>{
 
-    let response =  await fetch(`http://localhost:3001/users`,{
+    let response =  await fetch(`http://localhost:8080/users/register`,{
         method:'POST',
         body: JSON.stringify(user),
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            //'Access-Control-Allow-Origin' : '*',
+            //'Access-Control-Allow-Methods' : 'POST, GET, PUT'
         }
     })
     let data = await response.json();
