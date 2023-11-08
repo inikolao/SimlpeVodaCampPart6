@@ -16,15 +16,16 @@ public class BackendApiApplication {
         SpringApplication.run(BackendApiApplication.class, args);
     }
 
-    @Bean
+   /* @Bean
     public void setUp() {
         //BasicInitialize initialize=new BasicInitialize(20,15,15,30,40);
 
-        initialize.InitializeUsers();
+
         initialize.InitialiseGenres();
         initialize.InitialiseMovies();
         initialize.InitialiseCinemas();
         initialize.InitialiseMovieShows();
-    }
+        initialize.InitializeUsers();
+    }*/
 
 }

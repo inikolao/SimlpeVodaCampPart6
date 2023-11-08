@@ -1,5 +1,6 @@
 package iniko.voda.backendapi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,8 +34,11 @@ public class User implements UserDetails {
     @OneToOne
     private LastActions lastActions;
     @OneToMany
+    @JsonManagedReference
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Payment> payments;
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Reservation> reservations;
 
     public User() {

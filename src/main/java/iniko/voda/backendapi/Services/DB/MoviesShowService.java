@@ -28,4 +28,14 @@ public class MoviesShowService {
     {
         moviesShowRepo.save(moviesShow);
     }
+
+    public MoviesShow GetShowByRoomId(int id)
+    {
+        return moviesShowRepo.findMoviesShowByRoom_Id(id);
+    }
+    public float GetTicketPriceByrShowId(int id)
+    {
+        MoviesShow show=moviesShowRepo.findMoviesShowByRoom_Id(id);
+        return moviesShowRepo.findMoviesShowByRoom_Id(id).getTicketPrice();
+    }
 }

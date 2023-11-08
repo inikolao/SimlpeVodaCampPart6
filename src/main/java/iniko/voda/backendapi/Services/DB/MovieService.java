@@ -4,6 +4,7 @@ import iniko.voda.backendapi.DTO.Movie;
 import iniko.voda.backendapi.Repos.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ public class MovieService {
         movieRepo.findAll().forEach(movies::add);
         return movies;
     }
+    @Transactional
     public List<Movie> GetAllMoviesList()
     {
         List<Movie> movies=new ArrayList<>();

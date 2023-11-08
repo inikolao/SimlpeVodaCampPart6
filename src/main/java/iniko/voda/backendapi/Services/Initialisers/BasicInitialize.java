@@ -32,6 +32,10 @@ public class BasicInitialize {
     private CinemasService cinemasService;
     @Autowired
     private SeatService seatService;
+    @Autowired
+    private PaymentService paymentService;
+    @Autowired
+    private ReservationService reservationService;
 
     public BasicInitialize() {
 
@@ -40,11 +44,12 @@ public class BasicInitialize {
 
     public BasicInitialize(int prTps,int prCts,int ordCts,int flTps,int fils) {
 
-        InitializeUsers();
+
         InitialiseGenres();
         InitialiseMovies();
         InitialiseCinemas();
         InitialiseMovieShows();
+        InitializeUsers();
 
     }
 
@@ -67,11 +72,12 @@ public class BasicInitialize {
         Movie movie;
         for (int i = 0; i < 10; i++) {
             movie=new Movie();
+            movie.setTitle(GenRandomString());
             movie.setDescription(GenRandomString());
             movie.setPlot(GenRandomString());
             Set<Genre> genres=new HashSet<>();
             for (int j = 0; j < GenRandomInt(4); j++) {
-                genres.add(new Genre(GenRandomString(),movie));
+                genres.add(new Genre(GenRandomString()));
             }
             movie.setMovieGenre(genres);
             movie.setMoviesProps(new MoviesProps());
@@ -100,7 +106,7 @@ public class BasicInitialize {
            // cinema.setId(i);
             cinema.setName(GenRandomString()+"_Plex");
             cinema.setCity("Athers");
-            cinema.setAddress(GenRandomString()+" 88 12234");
+            cinema.setAddress(GenRandomString()+" 88 "+GenRandomInt(46546).toString());
             cinema.setRoomsNum(sv==0?1:sv);
             Room room;
             int dk=sv==0?1:sv;
@@ -117,9 +123,9 @@ public class BasicInitialize {
                 for (int k = 0; k < 65; k++) {
                     seat=new Seat();
                     seat=new Seat();
-                    seat.setSeatNo(j+1);
+                    seat.setSeatNo(k+1);
                     seat.setReserved(false);
-                    //seat.setRoomSeat(room);
+                    seat.setRoomSeat(room);
                     seats.add(seat);
                 }
                 room.setSeatStatusList(seats);
@@ -149,7 +155,7 @@ public class BasicInitialize {
             int sv=GenRandomInt(movies.size());
             moviesShow.setMovie(movies.get(sv==0?1:sv));
             room=rooms.get(i);
-            //moviesShow.setRoom(rooms.get(i));
+            moviesShow.setRoom(rooms.get(i));
             moviesShow.setDateTime(GetNowL());
             moviesShow.setTicketPrice((float)GenRandomInt(16));
             moviesShow.setSeatsBooked(0);
@@ -165,7 +171,6 @@ public class BasicInitialize {
 
 
     }
-
 
 
 
@@ -196,6 +201,51 @@ public class BasicInitialize {
             user.setName(GenRandomString());
             user.setSurname(GenRandomString());
             user.setLastLogIn(null);
+            Set<Reservation> reservations=new HashSet<>();
+           // seatService.
+            Seat seat;
+            Room room;
+            for (int j = 0; j < 3; j++) {
+                Reservation reservation=new Reservation();
+                reservation.setOwner(user);
+                int roomid=GenRandomInt(3)+1;
+               reservation.setCost(moviesShowService.GetTicketPriceByrShowId(roomid));
+                seat=seatService.GetSeatByRoomAndNo(roomid,GenRandomInt(63)+1);
+                reservation.setSeat(seat);
+                reservation.setCreationTimestamp(GetNowL());
+                //reservationService.CreateReservation(reservation);
+                reservations.add(reservation);
+              //  reservation.setSeat();
+
+            }
+            user.setReservations(reservations);
+            Set<Payment> payments=new HashSet<>();
+
+            Set<Reservation> reservLS=new HashSet<>();
+
+            Payment payment=new Payment();
+            payment.setPaymentUser(user);
+            payment.setPaymentTimestamp(GetNowL());
+            List<Reservation> reservationsus= new ArrayList<>(user.getReservations());
+            float sm=0;
+            Set<Reservation> reservatiHp=new HashSet<>();
+            for (int k = 0; k < 2; k++) {
+                sm =reservationsus.get(k).getCost()+sm;
+                reservatiHp.add(reservationsus.get(k));
+            }
+            payment.setAmount(sm);
+            payment.setReservations(reservatiHp);
+
+
+            Payment paymentSC=new Payment();
+            paymentSC.setPaymentUser(user);
+            paymentSC.setPaymentTimestamp(GetNowL());
+            sm =reservationsus.get(2).getCost();
+            paymentSC.setAmount(sm);
+            Set<Reservation> reservatiHpz=new HashSet<>();
+            reservatiHpz.add(reservationsus.get(2));
+            paymentSC.setReservations(reservatiHpz);
+
             userService.CreateUser(user);
         }
     }
@@ -212,6 +262,7 @@ public class BasicInitialize {
         admin.setName(GenRandomString());
         admin.setSurname(GenRandomString());
         admin.setLastLogIn(null);
+        admin.setReservations(new HashSet<>());
         userService.CreateUser(admin);
     }
 

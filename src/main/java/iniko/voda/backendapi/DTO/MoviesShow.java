@@ -1,5 +1,6 @@
 package iniko.voda.backendapi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import iniko.voda.backendapi.DTO.Utils.Seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,10 +26,11 @@ public class MoviesShow {
     @OneToOne
    // @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Movie movie;
-/*    @OneToOne
+    @OneToOne
+   // @JsonBackReference
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    //@JoinColumn(name = "showroom_id")
-    private Room room*/;
+    @JoinColumn(name = "showroom_id")
+    private Room room;
     private LocalDateTime dateTime;
     private float ticketPrice;
     private int seatsBooked;

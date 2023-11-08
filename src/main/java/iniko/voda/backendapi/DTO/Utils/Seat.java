@@ -1,5 +1,6 @@
 package iniko.voda.backendapi.DTO.Utils;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import iniko.voda.backendapi.DTO.Room;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,11 @@ public class Seat {
     private int id;
     private int seatNo;
     private boolean isReserved;
+    @OneToOne
+    @JsonBackReference
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "rooms_id")
+    //@Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private Room roomSeat;
 
 }

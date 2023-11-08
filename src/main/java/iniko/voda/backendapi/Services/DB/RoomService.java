@@ -4,6 +4,7 @@ import iniko.voda.backendapi.DTO.Room;
 import iniko.voda.backendapi.Repos.RoomsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,12 +17,14 @@ public class RoomService {
     @Autowired
     private RoomsRepo roomsRepo;
 
+    @Transactional
     public Set<Room> GetAllRooms()
     {
         Set<Room> rooms=new HashSet<>();
         roomsRepo.findAll().forEach(rooms::add);
         return rooms;
     }
+    @Transactional
     public List<Room> GetAllRoomsList()
     {
         List<Room> rooms=new ArrayList<>();

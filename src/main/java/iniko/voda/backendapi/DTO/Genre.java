@@ -23,13 +23,13 @@ public class Genre {
 
     private String name;
 
-    @ManyToOne//(mappedBy = "Genres")
+/*    @ManyToOne//(mappedBy = "Genres")
     @JoinTable(name = "movies_genres")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Movie movie;
+    private Movie movie;*/
 
-    public Genre(String name, Movie movie) {
+    public Genre(String name) {
         this.name = name;
-        this.movie = movie;
+        //this.movie = movie;
     }
 }

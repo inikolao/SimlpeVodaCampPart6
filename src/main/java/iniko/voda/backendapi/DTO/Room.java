@@ -1,5 +1,7 @@
 package iniko.voda.backendapi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import iniko.voda.backendapi.DTO.Utils.Seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +26,11 @@ public class Room {
     private int roomCinemaNo;
     private int seats;
     @OneToMany
+    @JsonManagedReference
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Seat> seatStatusList;
     @OneToMany
+    @JsonManagedReference
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<MoviesShow> moviesShowsRoom;
 }
