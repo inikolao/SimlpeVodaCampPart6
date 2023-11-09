@@ -22,6 +22,7 @@ public class User implements UserDetails {
     private String Name;
     private String Surname;
     private String Mobile;
+    private String email;
     /*@OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Order> Orders;*/
@@ -170,6 +171,14 @@ public class User implements UserDetails {
         this.reservations = reservations;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -179,6 +188,7 @@ public class User implements UserDetails {
                 ", Name='" + Name + '\'' +
                 ", Surname='" + Surname + '\'' +
                 ", Mobile='" + Mobile + '\'' +
+                ", email='" + email + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", IsActive=" + IsActive +
                 ", LastLogIn=" + LastLogIn +
