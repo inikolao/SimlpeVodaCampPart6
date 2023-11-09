@@ -12,7 +12,7 @@ const initialState = {
 }
 
 export const fetchMoovies = createAsyncThunk('fetch/movies',async()=>{
-    let response = await fetch('http://localhost:3001/movies')
+    let response = await fetch('http://localhost:8080/movie/all')
     return response.json()
 
 })

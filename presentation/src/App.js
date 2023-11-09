@@ -19,6 +19,7 @@ import History from "./components/history";
 import PayementsView from "./components/PaymentsPages/payementsView";
 import BookAMovie from "./components/ReservationPage/bookAMovie";
 import MoviePresentation from "./components/moviePages/moviePresentation";
+import Reservations from "./components/ReservationPage/reservations";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path='/logout' element={<Logout/>}></Route>
           <Route path='/profile/:username' element={<Profile/>}></Route>
           <Route path='/users' element={<Users/>}></Route>
+          <Route path='/reservations' element={<Reservations/>}></Route>
           <Route path='/reservation/:roomid' element={<ReservationMap/>}></Route>
           <Route path='/tickets' element={<Tickets/>}></Route>
           <Route path='/history' element={<History/>}></Route>

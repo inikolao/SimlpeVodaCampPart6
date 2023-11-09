@@ -72,6 +72,14 @@ function Header() {
                             {//onClick={()=>dispatch(logoutUser())}
                                 isLoggedIn &&
                                 <li className="nav-item">
+                                    <NavLink className="nav-link" to="/reservations" >
+                                        My Reservations
+                                    </NavLink>
+                                </li>
+                            }
+                            {//onClick={()=>dispatch(logoutUser())}
+                                isLoggedIn &&
+                                <li className="nav-item">
                                     <NavLink className="nav-link" to="/history" >
                                         My History
                                     </NavLink>

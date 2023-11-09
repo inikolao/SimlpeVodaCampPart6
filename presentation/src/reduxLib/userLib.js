@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import bcrypt from 'bcryptjs';
 const initialState = {
     loginstatus:'',
     username:sessionStorage.getItem('username') || '',
@@ -11,7 +12,8 @@ const initialState = {
         'name': '',
         'surname': '',
         'email': '',
-        'password': ''
+        'password': '',
+        'mobile': '',
 
     }
 }
@@ -26,10 +28,13 @@ export const loginUser = createAsyncThunk('login/User',async(user)=>{
     console.log(user, 'logging in')
     let response = await fetch(`http://localhost:8080/users/?username=${user.username}`);
     let fetchuser = await response.json()
-    // console.log(fetchuser)
-    if(fetchuser.length > 0 && fetchuser[0].password === user.password)
+    // console.log(fetchuser.password, "  jjj")
+   // console.log(bcrypt.compareSync(user.password,fetchuser.password))
+   // console.log("lng" ,fetchuser.password.length)
+    if(fetchuser.password.length > 0 && bcrypt.compareSync(user.password,fetchuser.password))
     {
-        return Promise.resolve(fetchuser[0]);
+        console.log("if inside")
+        return Promise.resolve(fetchuser);
     }
     return Promise.reject('error')
 })

@@ -31,7 +31,7 @@ function Profile() {
         }
     },[user,dispatch]);
 
-    function checkAdmin(username,email,id)
+    function checkAdmin(username,email,id,name,surname,mobile,password)
     {
 
 
@@ -41,7 +41,7 @@ function Profile() {
         }
         else
         {
-          return  <ProfilePage {...{username,email,id}} />;
+          return  <ProfilePage {...{username,email,id,name,surname,mobile,password}} />;
         }
     }
 
@@ -53,7 +53,7 @@ function Profile() {
                         //isUserLoggedIn()  ?
                        userprofile ?
                            (
-                               checkAdmin(user.username,user.email,user.id)
+                               checkAdmin(user.username,user.email,user.id,user.name,user.surname,user.mobile,user.password)
                            ):''
                         // <Navigate to='/login'/>
                     }
