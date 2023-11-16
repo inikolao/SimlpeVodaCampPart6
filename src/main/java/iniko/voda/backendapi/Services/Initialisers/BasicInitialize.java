@@ -211,6 +211,8 @@ public class BasicInitialize {
                 int roomid=GenRandomInt(3)+1;
                reservation.setCost(moviesShowService.GetTicketPriceByrShowId(roomid));
                 seat=seatService.GetSeatByRoomAndNo(roomid,GenRandomInt(63)+1);
+                seat.setReserved(true);
+                seatService.CreateSeat(seat);
                 reservation.setSeat(seat);
                 reservation.setCreationTimestamp(GetNowL());
                 //reservationService.CreateReservation(reservation);
@@ -220,32 +222,34 @@ public class BasicInitialize {
             }
             user.setReservations(reservations);
             Set<Payment> payments=new HashSet<>();
-
-            Set<Reservation> reservLS=new HashSet<>();
-
-            Payment payment=new Payment();
-            payment.setPaymentUser(user);
-            payment.setPaymentTimestamp(GetNowL());
-            List<Reservation> reservationsus= new ArrayList<>(user.getReservations());
+            Payment payment1=new Payment();
+            payment1.setPaymentUser(user);
+            payment1.setPaymentTimestamp(GetNowL());
+            List<Reservation> reservationsCRS= new ArrayList<>(user.getReservations());
+            Set<Reservation> respayment1= new HashSet<>();
             float sm=0;
-            Set<Reservation> reservatiHp=new HashSet<>();
-            for (int k = 0; k < 2; k++) {
-                sm =reservationsus.get(k).getCost()+sm;
-                reservatiHp.add(reservationsus.get(k));
+            for (int j = 0; j < 2; j++) {
+                sm =reservationsCRS.get(j).getCost()+sm;
+                respayment1.add(reservationsCRS.get(j));
             }
-            payment.setAmount(sm);
-            payment.setReservations(reservatiHp);
+            payment1.setAmount(sm);
+            payment1.setReservations(respayment1);
+            /////
+            //
+            //
 
-
-            Payment paymentSC=new Payment();
-            paymentSC.setPaymentUser(user);
-            paymentSC.setPaymentTimestamp(GetNowL());
-            sm =reservationsus.get(2).getCost();
-            paymentSC.setAmount(sm);
-            Set<Reservation> reservatiHpz=new HashSet<>();
-            reservatiHpz.add(reservationsus.get(2));
-            paymentSC.setReservations(reservatiHpz);
-
+            ////////
+            Payment payment2=new Payment();
+            payment2.setPaymentUser(user);
+            payment2.setPaymentTimestamp(GetNowL());
+            Set<Reservation> respayment2= new HashSet<>();
+            respayment2.add(reservationsCRS.get(2));
+            payment2.setReservations(respayment2);
+            payment2.setAmount(reservationsCRS.get(2).getCost());
+            Set<Payment> paymentSet=new HashSet<>();
+            paymentSet.add(payment1);
+            paymentSet.add(payment2);
+            user.setPayments(paymentSet);
             userService.CreateUser(user);
         }
     }
@@ -255,6 +259,7 @@ public class BasicInitialize {
         admin.setUsername("admin");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         admin.setPassword(passwordEncoder.encode("sa"));
+        admin.setEmail("admin@papa.com");
         admin.setAdmin(true);
         admin.setActive(true);
         admin.setMobile("012345678910");
@@ -272,6 +277,7 @@ public class BasicInitialize {
         guest.setUsername("guest");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         guest.setPassword(passwordEncoder.encode("xxxxxxx"));
+        guest.setEmail("gest@papa.com");
         guest.setAdmin(false);
         guest.setActive(false);
         guest.setMobile("012345678910");
@@ -279,6 +285,55 @@ public class BasicInitialize {
         guest.setName(GenRandomString());
         guest.setSurname(GenRandomString());
         guest.setLastLogIn(null);
+        Set<Reservation> reservations=new HashSet<>();
+        // seatService.
+        Seat seat;
+        Room room;
+        for (int j = 0; j < 3; j++) {
+            Reservation reservation=new Reservation();
+            reservation.setOwner(guest);
+            int roomid=GenRandomInt(3)+1;
+            reservation.setCost(moviesShowService.GetTicketPriceByrShowId(roomid));
+            seat=seatService.GetSeatByRoomAndNo(roomid,GenRandomInt(63)+1);
+            seat.setReserved(true);
+            seatService.CreateSeat(seat);
+            reservation.setSeat(seat);
+            reservation.setCreationTimestamp(GetNowL());
+            //reservationService.CreateReservation(reservation);
+            reservations.add(reservation);
+            //  reservation.setSeat();
+
+        }
+        guest.setReservations(reservations);
+        Set<Payment> payments=new HashSet<>();
+        Payment payment1=new Payment();
+        payment1.setPaymentUser(guest);
+        payment1.setPaymentTimestamp(GetNowL());
+        List<Reservation> reservationsCRS= new ArrayList<>(guest.getReservations());
+        Set<Reservation> respayment1= new HashSet<>();
+        float sm=0;
+        for (int j = 0; j < 2; j++) {
+            sm =reservationsCRS.get(j).getCost()+sm;
+            respayment1.add(reservationsCRS.get(j));
+        }
+        payment1.setAmount(sm);
+        payment1.setReservations(respayment1);
+        /////
+        //
+        //
+
+        ////////
+        Payment payment2=new Payment();
+        payment2.setPaymentUser(guest);
+        payment2.setPaymentTimestamp(GetNowL());
+        Set<Reservation> respayment2= new HashSet<>();
+        respayment2.add(reservationsCRS.get(2));
+        payment2.setReservations(respayment2);
+        payment2.setAmount(reservationsCRS.get(2).getCost());
+        Set<Payment> paymentSet=new HashSet<>();
+        paymentSet.add(payment1);
+        paymentSet.add(payment2);
+        guest.setPayments(paymentSet);
         userService.CreateUser(guest);
     }
     private void createMainTest()
@@ -287,6 +342,7 @@ public class BasicInitialize {
         test.setUsername("user");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         test.setPassword(passwordEncoder.encode("sa"));
+        test.setEmail(test.getUsername()+"@papa.com");
         test.setAdmin(false);
         test.setActive(true);
         test.setMobile("012345678910");
@@ -294,6 +350,55 @@ public class BasicInitialize {
         test.setName(GenRandomString());
         test.setSurname(GenRandomString());
         test.setLastLogIn(null);
+        Set<Reservation> reservations=new HashSet<>();
+        // seatService.
+        Seat seat;
+        Room room;
+        for (int j = 0; j < 3; j++) {
+            Reservation reservation=new Reservation();
+            reservation.setOwner(test);
+            int roomid=GenRandomInt(3)+1;
+            reservation.setCost(moviesShowService.GetTicketPriceByrShowId(roomid));
+            seat=seatService.GetSeatByRoomAndNo(roomid,GenRandomInt(63)+1);
+            seat.setReserved(true);
+            seatService.CreateSeat(seat);
+            reservation.setSeat(seat);
+            reservation.setCreationTimestamp(GetNowL());
+            //reservationService.CreateReservation(reservation);
+            reservations.add(reservation);
+            //  reservation.setSeat();
+
+        }
+        test.setReservations(reservations);
+        Set<Payment> payments=new HashSet<>();
+        Payment payment1=new Payment();
+        payment1.setPaymentUser(test);
+        payment1.setPaymentTimestamp(GetNowL());
+        List<Reservation> reservationsCRS= new ArrayList<>(test.getReservations());
+        Set<Reservation> respayment1= new HashSet<>();
+        float sm=0;
+        for (int j = 0; j < 2; j++) {
+            sm =reservationsCRS.get(j).getCost()+sm;
+            respayment1.add(reservationsCRS.get(j));
+        }
+        payment1.setAmount(sm);
+        payment1.setReservations(respayment1);
+        /////
+        //
+        //
+
+        ////////
+        Payment payment2=new Payment();
+        payment2.setPaymentUser(test);
+        payment2.setPaymentTimestamp(GetNowL());
+        Set<Reservation> respayment2= new HashSet<>();
+        respayment2.add(reservationsCRS.get(2));
+        payment2.setReservations(respayment2);
+        payment2.setAmount(reservationsCRS.get(2).getCost());
+        Set<Payment> paymentSet=new HashSet<>();
+        paymentSet.add(payment1);
+        paymentSet.add(payment2);
+        test.setPayments(paymentSet);
         userService.CreateUser(test);
     }
     /*private List<Object> SetObjectsNum(Object obj, Class obj.Class, int Interations)

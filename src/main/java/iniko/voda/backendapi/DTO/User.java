@@ -7,11 +7,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "Users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int userID;
@@ -35,7 +36,7 @@ public class User implements UserDetails {
     @OneToOne
     private LastActions lastActions;
     @OneToMany
-    @JsonManagedReference
+    //@JsonManagedReference
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Payment> payments;
     @OneToMany

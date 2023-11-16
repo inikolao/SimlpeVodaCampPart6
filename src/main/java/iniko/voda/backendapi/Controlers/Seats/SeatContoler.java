@@ -3,13 +3,11 @@ package iniko.voda.backendapi.Controlers.Seats;
 import iniko.voda.backendapi.DTO.Utils.Seat;
 import iniko.voda.backendapi.Services.DB.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/seats")
 public class SeatContoler {
