@@ -7,13 +7,20 @@ const initialState = {
     registerstatus:'failure',
     isLoggedIn:!!sessionStorage.getItem('username'),
     user:{
-        "id":0,
+        'id':0,
         'username': '',
+        'password': '',
         'name': '',
         'surname': '',
-        'email': '',
-        'password': '',
         'mobile': '',
+        'email': '',
+        'isAdmin': '',
+        'isActive': '',
+        'LastLogIn': '',
+        'DateCreated': '',
+        'lastActions': '',
+        'payments': [],
+        'reservations': [],
 
     }
 }
@@ -53,8 +60,7 @@ export const registerUser = createAsyncThunk('register/user', async(user)=>{
         body: JSON.stringify(user),
         headers:{
             'Content-Type' : 'application/json',
-            //'Access-Control-Allow-Origin' : '*',
-            //'Access-Control-Allow-Methods' : 'POST, GET, PUT'
+           // 'Access-Control-Allow-Origin' : 'true'
         }
     })
     let data = await response.json();

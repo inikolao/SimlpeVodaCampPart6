@@ -10,7 +10,7 @@ const initialState = {
     "username": "",
     "name": "",
     "surname": "",
-    "city": "",
+    "mobile": "",
     "email": "",
     "password": ""
 }
@@ -36,7 +36,7 @@ function Register() {
     const handleSubmit = (event)=>{
         event.preventDefault();
         // console.log('Selected option:', selectedOption);
-        user.city=selectedOption;
+        //user.city=selectedOption;
         //console.log('City option:', user.city);
         console.log('User :', user);
         dispatch(registerUser(user))
@@ -70,19 +70,8 @@ function Register() {
                     <input type="text" className="form-control" id="surname" name="surname" placeholder="Surname" value={user.surname} onChange={(event)=>setuser({...user, [event.target.name]:event.target.value})}/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="City">City:</label>
-                    <select
-                        className="form-select"
-                        id="exampleSelect"
-                        value={selectedOption}
-                        onChange={handleSelectChange}
-                    >
-                        <option value="">Choose...</option>
-                        <option value="Athens">Athens</option>
-                        <option value="Paris">Paris</option>
-                        <option value="London">London</option>
-                        <option value="Ibiza">Ibiza</option>
-                    </select>
+                    <label htmlFor="Mobile">Mobile:</label>
+                    <input type="tel" className="form-control" id="mobile" name="mobile" placeholder="Mobile" value={user.mobile} onChange={(event)=>setuser({...user, [event.target.name]:event.target.value})}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
