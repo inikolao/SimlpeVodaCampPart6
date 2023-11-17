@@ -6,6 +6,8 @@ const initialState = {
     id:sessionStorage.getItem('id') || '',
     registerstatus:'failure',
     isLoggedIn:!!sessionStorage.getItem('username'),
+    selectedUser: null,
+    users:[],
     user:{
         'id':0,
         'username': '',
@@ -109,11 +111,12 @@ const userslice = createSlice({
                 state.registerstatus = 'failure';
             })
             .addCase(fetchUserByUsername.fulfilled, (state, action)=>{
-                state.user = action.payload[0]
+                state.registerstatus = 'success';
+                state.selectedUser = action.payload;
             })
             .addCase(fetchUsers.fulfilled,(state, action)=>{
                 state.registerstatus = 'success';
-                state.user = action.payload[0];
+                state.users = action.payload;
             })
             .addCase(fetchUsers.rejected,(state, action)=>{
                 state.registerstatus = 'failure';

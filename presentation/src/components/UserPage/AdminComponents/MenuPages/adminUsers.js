@@ -1,11 +1,36 @@
-import React from 'react';
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {fetchUsers} from "../../../../reduxLib/userLib";
 
 function AdminUsers() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [userlist,setuserList]=useState([]);
+    const users =  useSelector((state)=> state.userreducer.users);
+    const state=useSelector((state)=> state.userreducer.state);
 
+    useEffect(()=>{
+
+        if (!users || users.length === 0) {
+            // Fetch the event by ID when the component mounts or when the id changes
+            dispatch(fetchUsers()).then((action) => {
+                // Once the action is fulfilled, set the eventprofile state
+                if (action.payload) {
+                    setuserList(action.payload);
+                    console.log("playload ", action.payload);
+                    console.log("playload E", userlist);
+                }
+            });
+        } else {
+            //let f=events.filter((event) => event.ownerid === id);
+            // If the event data is already available, set the eventprofile state
+
+            setuserList(users);
+            console.log("not disp ",userlist);
+        }
+
+    },[dispatch,state]);
 
     return (
         <div><h2>User Management</h2>
@@ -27,22 +52,31 @@ function AdminUsers() {
                     <th>Last Log In</th>
                     <th>Admin</th>
                     <th>Enabled</th>
-                    <th>Action</th>
+                    <th>Date Created</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td text="${user.getUsername()}"></td>
-                    <td text="${user.getName()}"></td>
-                    <td text="${user.getLastLogIn()}"></td>
-                    <td text="${user.getAdmin()}"></td>
-                    <td text="${user.isEnabled()}"></td>
-                    <td>
-                        <a
-                           className="btn btn-danger btn-sm deleteUser" data-id="">Delete</a>
-                    </td>
-                </tr>
-                </tbody>
+                {
+                    userlist.map((user) =>(
+                        <tbody>
+                        <tr>
+                            <td text={user.username}>{user.username}</td>
+                            <td text={user.name}>{user.name}</td>
+                            <td text={user.lastLogIn}>{user.lastLogIn}</td>
+                            <td text={user.admin}>{user.admin}</td>
+                            <td text={user.enabled}>{user.enabled}</td>
+                            <td text={user.dateCreated}>{user.dateCreated}</td>
+                            <td>
+                                <a
+                                    className="btn btn-light btn-sm deleteUser" data-id={user.id}>Edit</a>
+                                <a
+                                    className="btn btn-danger btn-sm deleteUser" data-id={user.id}>Delete</a>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    ))
+
+                }
             </table>
             <nav>
                 <ul className="pagination">

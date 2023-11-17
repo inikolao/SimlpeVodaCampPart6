@@ -1,22 +1,23 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {fetchMoovies} from "./mooviesLib";
+import {createAsyncThunk,createSlice} from "@reduxjs/toolkit";
+import {fetchGenres} from "./genreLib";
 
 const initialState={
-    genreList:[],
-    selectedGenre: null,
+    ticketList:[],
+    selectedTicket: null,
     registerstatus:'failure',
     editstatus:'failure',
     status:"idle",
     error:''
 }
-export const fetchGenres = createAsyncThunk('fetch/genres',async()=>{
-    let response = await fetch('http://localhost:8080/genre/all')
+
+export const fetchTickets = createAsyncThunk('fetch/genres',async()=>{
+    let response = await fetch('http://localhost:8080/tickets/all')
     return response.json()
 
 })
 
-const genreslice = createSlice({
-    name:"genres",
+const ticketslice = createSlice({
+    name:"tickets",
     initialState,
     reducers:{
         changeRegisterStatus:(state)=>{
@@ -27,15 +28,15 @@ const genreslice = createSlice({
         }
     },
     extraReducers(builder){
-        builder.addCase(fetchGenres.pending, (state, action) => {
+        builder.addCase(fetchTickets.pending, (state, action) => {
             state.status = 'loading';
         });
-        builder.addCase(fetchGenres.fulfilled, (state, action) => {
+        builder.addCase(fetchTickets.fulfilled, (state, action) => {
             state.status = 'success';
             //state.eventsList = state.eventsList.concat(action.payload);
-            state.genreList = action.payload;
+            state.ticketList = action.payload;
         });
-        builder.addCase(fetchGenres.rejected, (state, action) => {
+        builder.addCase(fetchTickets.rejected, (state, action) => {
             state.status = 'error';
             state.error = state.error.message || 'Failed to fetch genres';
         });
@@ -109,5 +110,3 @@ const genreslice = createSlice({
          })*/
     }
 })
-
-export default genreslice.reducer;

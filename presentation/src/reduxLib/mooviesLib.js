@@ -36,7 +36,7 @@ const moovieslice = createSlice({
         builder.addCase(fetchMoovies.fulfilled, (state, action) => {
             state.status = 'success';
             //state.eventsList = state.eventsList.concat(action.payload);
-            state.eventsList = action.payload;
+            state.moovieList = action.payload;
         });
         builder.addCase(fetchMoovies.rejected, (state, action) => {
             state.status = 'error';

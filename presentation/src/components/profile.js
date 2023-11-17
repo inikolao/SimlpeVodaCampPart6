@@ -10,30 +10,37 @@ function Profile() {
     console.log('name ',username);
     const [userprofile, setuserprofile] = useState();
     let dispatch = useDispatch();
-    let user = useSelector((state)=> state.userreducer.user);
+    const user = useSelector((state)=> state.userreducer.selectedUser);
+    const state=useSelector((state)=> state.userreducer.state);
     let isLoggedIn = useSelector((state)=> state.userreducer.isLoggedIn);
     let navigate = useNavigate();
 
     useEffect(()=>{
 
-        console.log('profile')
+        console.log('profile : '+username)
         if(!isLoggedIn) {
             alert('Please Login')
             navigate('/login')
         }
-        if(user.id === 0)
-            dispatch(fetchUserByUsername(username));
+       // if(user.id === 0)
+        if (!user || user.length === 0)
+            dispatch(fetchUserByUsername(username)).then((action)=>{
+                if (action.payload) {
+                    setuserprofile(action.payload);
+                    console.log("playload ", action.payload);
+                }
+            });
         else{
             console.log('else');
             console.log(user);
             setuserprofile(user);
            // alert("us : "+user.id);
         }
-    },[user,dispatch]);
+    },[user,dispatch,state]);
 
     function checkAdmin(username,email,id,name,surname,mobile,password)
     {
-
+        console.log('profile check : '+username)
 
         if(username ==='admin')
         {

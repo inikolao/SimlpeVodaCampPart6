@@ -1,7 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../specialFiles/special.css';
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {fetchMoovies} from "../../reduxLib/mooviesLib";
 
 function Search() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [movielist,setMovieList]=useState([]);
+    const movies=useSelector((state)=>state.mooviessreducer.moovieList);
+    const state=useSelector((state) => state.mooviessreducer.state);
+
+    useEffect(()=>{
+
+        if (!movies || movies.length === 0) {
+            // Fetch the event by ID when the component mounts or when the id changes
+            dispatch(fetchMoovies()).then((action) => {
+                // Once the action is fulfilled, set the eventprofile state
+                if (action.payload) {
+                    setMovieList(action.payload);
+                    console.log("playload ", action.payload);
+                    console.log("playload E", movielist);
+                }
+            });
+        } else {
+            //let f=events.filter((event) => event.ownerid === id);
+            // If the event data is already available, set the eventprofile state
+
+            setMovieList(movies);
+            console.log("not disp ",movielist);
+        }
+
+    },[dispatch,state]);
+
     return (
         <div>
             <div className="page-single movie_list">
@@ -9,7 +41,9 @@ function Search() {
                     <div className="row ipad-width2">
                         <div className="col-md-8 col-sm-12 col-xs-12">
                             <div className="topbar-filter">
-                                <p>Found <span>1,608 movies</span> in total</p>
+                                {
+                                    <p>Found <span>{movielist.length}</span> in total</p>
+                                }
                                 <label>Sort by:</label>
                                 <select>
                                     <option value="popularity">Popularity Descending</option>
@@ -23,81 +57,24 @@ function Search() {
                                     className="ion-ios-list-outline active"></i></a>
                                 <a href="moviegrid.html" className="grid"><i className="ion-grid"></i></a>
                             </div>
-                            <div className="movie-item-style-2">
-                                <img src="../../specialFiles/mv1.jpg" alt=""/>
-                                    <div className="mv-item-infor">
-                                        <h6><a href={`/movieview/1`}>oblivion <span>(2012)</span></a></h6>
-                                        <p className="rate"><i className="ion-android-star"></i><span>8.1</span> /10</p>
-                                        <p className="describe">Earth's mightiest heroes must come together and learn to
-                                            fight as a team if they are to stop the mischievous Loki and his alien army
-                                            from enslaving humanity...</p>
-                                        <p className="run-time"> Run Time: 2h21’ . <span>MMPA: PG-13 </span> . <span>Release: 1 May 2015</span>
-                                        </p>
-                                        <p>Director: <a href="#">Joss Whedon</a></p>
-                                        <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a
-                                            href="#"> Chris Hemsworth</a></p>
+                            {
+                                movielist.map((movie) =>(
+                                    <div className="movie-item-style-2">
+                                        <img src={movie.files[0].path} alt=""/>
+                                        <div className="mv-item-infor">
+                                            <h6><a href={`/movieview/`+movie.id}>{movie.title}</a></h6>
+                                            <p className="rate"><i className="ion-android-star"></i><span>{movie.rating}</span> /10</p>
+                                            <p className="describe">{movie.description}</p>
+                                            <p className="run-time"> Run Time: {movie.duration} . <span>MMPA: PG-13 </span> . <span>Language: {movie.language}</span></p>
+                                            <p>Director: <a href="#">TBD</a></p>
+                                            <p>Stars: <a href="#">TBD</a> <a href="#">TBD</a> <a
+                                                href="#">TBD</a></p>
+                                            <button
+                                                className="btn btn-light btn-sm deleteUser" data-id={movie.id}>Book A seat</button>
+                                        </div>
                                     </div>
-                            </div>
-                            <div className="movie-item-style-2">
-                                <img src="../../specialFiles/mv2.jpg" alt=""/>
-                                    <div className="mv-item-infor">
-                                        <h6><a href="moviesingle.html">into the wild <span>(2014)</span></a></h6>
-                                        <p className="rate"><i className="ion-android-star"></i><span>7.8</span> /10</p>
-                                        <p className="describe">As Steve Rogers struggles to embrace his role in the
-                                            modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black
-                                            Widow, to battle a new threat...</p>
-                                        <p className="run-time"> Run Time: 2h21’ . <span>MMPA: PG-13 </span> . <span>Release: 1 May 2015</span>
-                                        </p>
-                                        <p>Director: <a href="#">Anthony Russo,</a><a href="#">Joe Russo</a></p>
-                                        <p>Stars: <a href="#">Chris Evans,</a> <a href="#">Samuel L. Jackson,</a> <a
-                                            href="#"> Scarlett Johansson</a></p>
-                                    </div>
-                            </div>
-                            <div className="movie-item-style-2">
-                                <img src="../../specialFiles/mv3.jpg" alt=""/>
-                                    <div className="mv-item-infor">
-                                        <h6><a href="moviesingle.html">blade runner <span>(2015)</span></a></h6>
-                                        <p className="rate"><i className="ion-android-star"></i><span>7.3</span> /10</p>
-                                        <p className="describe">Armed with a super-suit with the astonishing ability to
-                                            shrink in scale but increase in strength, cat burglar Scott Lang must
-                                            embrace his inner hero and help...</p>
-                                        <p className="run-time"> Run Time: 2h21’ . <span>MMPA: PG-13 </span> . <span>Release: 1 May 2015</span>
-                                        </p>
-                                        <p>Director: <a href="#">Peyton Reed</a></p>
-                                        <p>Stars: <a href="#">Paul Rudd,</a> <a href="#"> Michael Douglas</a></p>
-                                    </div>
-                            </div>
-                            <div className="movie-item-style-2">
-                                <img src="../../specialFiles/mv4.jpg" alt=""/>
-                                    <div className="mv-item-infor">
-                                        <h6><a href="moviesingle.html">Mulholland pride<span> (2013)  </span></a></h6>
-                                        <p className="rate"><i className="ion-android-star"></i><span>7.2</span> /10</p>
-                                        <p className="describe">When Tony Stark's world is torn apart by a formidable
-                                            terrorist called the Mandarin, he starts an odyssey of rebuilding and
-                                            retribution.</p>
-                                        <p className="run-time"> Run Time: 2h21’ . <span>MMPA: PG-13 </span> . <span>Release: 1 May 2015</span>
-                                        </p>
-                                        <p>Director: <a href="#">Shane Black</a></p>
-                                        <p>Stars: <a href="#">Robert Downey Jr., </a> <a href="#"> Guy Pearce,</a><a
-                                            href="#">Don Cheadle</a></p>
-                                    </div>
-                            </div>
-                            <div className="movie-item-style-2">
-                                <img src="../../specialFiles/mv5.jpg" alt=""/>
-                                    <div className="mv-item-infor">
-                                        <h6><a href="moviesingle.html">skyfall: evil of boss<span> (2013)  </span></a>
-                                        </h6>
-                                        <p className="rate"><i className="ion-android-star"></i><span>7.0</span> /10</p>
-                                        <p className="describe">When Tony Stark's world is torn apart by a formidable
-                                            terrorist called the Mandarin, he starts an odyssey of rebuilding and
-                                            retribution.</p>
-                                        <p className="run-time"> Run Time: 2h21’ . <span>MMPA: PG-13 </span> . <span>Release: 1 May 2015</span>
-                                        </p>
-                                        <p>Director: <a href="#">Alan Taylor</a></p>
-                                        <p>Stars: <a href="#">Chris Hemsworth, </a> <a href="#"> Natalie Portman,</a><a
-                                            href="#">Tom Hiddleston</a></p>
-                                    </div>
-                            </div>
+                                ))
+                            }
                             <div className="topbar-filter">
                                 <label>Movies per page:</label>
                                 <select>
@@ -177,78 +154,6 @@ function Search() {
                                         </div>
                                     </form>
                                 </div>
-                                <div className="ads">
-                                    <img src="images/uploads/ads1.png" alt=""/>
-                                </div>
-                                {/*<div className="sb-facebook sb-it">
-                                    <h4 className="sb-title">Find us on Facebook</h4>
-                                    <iframe
-                                        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fhaintheme%2F%3Ffref%3Dts&amp;tabs=timeline&amp;width=340&amp;height=315px&amp;small_header=true&amp;adapt_container_width=false&amp;hide_cover=false&amp;show_facepile=true&amp;appId"
-                                        data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fhaintheme%2F%3Ffref%3Dts&amp;tabs=timeline&amp;width=340&amp;height=315px&amp;small_header=true&amp;adapt_container_width=false&amp;hide_cover=false&amp;show_facepile=true&amp;appId"
-                                        height="315" style="width:100%;border:none;overflow:hidden"></iframe>
-                                </div>*/}
-                                {/*<div className="sb-twitter sb-it">
-                                    <h4 className="sb-title">Tweet to us</h4>
-                                    <div className="slick-tw slick-initialized slick-slider slick-dotted"
-                                         role="toolbar">
-
-
-                                        <div aria-live="polite" className="slick-list draggable">
-                                            <div className="slick-track"
-                                                 style="opacity: 1; width: 2172px; transform: translate3d(-543px, 0px, 0px);"
-                                                 role="listbox">
-                                                <div className="tweet item slick-slide slick-cloned"
-                                                     style="width: 543px;" tabIndex="-1" role="option"
-                                                     aria-describedby="slick-slide01" data-slick-index="-1"
-                                                     aria-hidden="true">
-                                                    <iframe id="" scrolling="no" frameBorder="0"
-                                                            allowTransparency="true" allowFullScreen="true"
-                                                            className="twitter-tweet twitter-tweet-rendered"
-                                                            style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe>
-                                                </div>
-                                                <div className="tweet item slick-slide slick-current slick-active"
-                                                     id="599202861751410688" style="width: 543px;" tabIndex="-1"
-                                                     role="option" aria-describedby="slick-slide00" data-slick-index="0"
-                                                     aria-hidden="false">
-                                                    <iframe id="twitter-widget-0" scrolling="no" frameBorder="0"
-                                                            allowTransparency="true" allowFullScreen="true"
-                                                            className="twitter-tweet twitter-tweet-rendered"
-                                                            style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe>
-                                                </div>
-                                                <div className="tweet item slick-slide" id="297462728598122498"
-                                                     style="width: 543px;" tabIndex="-1" role="option"
-                                                     aria-describedby="slick-slide01" data-slick-index="1"
-                                                     aria-hidden="true">
-                                                    <iframe id="twitter-widget-1" scrolling="no" frameBorder="0"
-                                                            allowTransparency="true" allowFullScreen="true"
-                                                            className="twitter-tweet twitter-tweet-rendered"
-                                                            style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe>
-                                                </div>
-                                                <div className="tweet item slick-slide slick-cloned"
-                                                     style="width: 543px;" tabIndex="-1" role="option"
-                                                     aria-describedby="slick-slide00" data-slick-index="2"
-                                                     aria-hidden="true">
-                                                    <iframe id="" scrolling="no" frameBorder="0"
-                                                            allowTransparency="true" allowFullScreen="true"
-                                                            className="twitter-tweet twitter-tweet-rendered"
-                                                            style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul className="slick-dots" role="tablist">
-                                            <li className="slick-active" aria-hidden="false" role="presentation"
-                                                aria-selected="true" aria-controls="navigation00" id="slick-slide00">
-                                                <button type="button" data-role="none" role="button" tabIndex="0">1
-                                                </button>
-                                            </li>
-                                            <li aria-hidden="true" role="presentation" aria-selected="false"
-                                                aria-controls="navigation01" id="slick-slide01">
-                                                <button type="button" data-role="none" role="button" tabIndex="0">2
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>*/}
                             </div>
                         </div>
                     </div>
