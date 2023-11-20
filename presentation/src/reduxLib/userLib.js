@@ -55,6 +55,13 @@ export const fetchUserByUsername = createAsyncThunk('fetch/User',async(username)
 
 })
 
+export const fetchTicketsByUsername = createAsyncThunk('fetch/reservationUser',async(username)=>{
+    let response = await fetch(`http://localhost:8080/users/${username}`)
+    // console.log('fetch user', response)
+    return  response.json()
+
+})
+
 export const registerUser = createAsyncThunk('register/user', async(user)=>{
 
     let response =  await fetch(`http://localhost:8080/users/register`,{
@@ -119,6 +126,14 @@ const userslice = createSlice({
                 state.users = action.payload;
             })
             .addCase(fetchUsers.rejected,(state, action)=>{
+                state.registerstatus = 'failure';
+            })
+        //fetchTicketsByUsername
+            .addCase(fetchTicketsByUsername.fulfilled,(state, action)=>{
+                state.registerstatus = 'success';
+                state.selectedUser = action.payload;
+            })
+            .addCase(fetchTicketsByUsername.rejected,(state, action)=>{
                 state.registerstatus = 'failure';
             })
     }

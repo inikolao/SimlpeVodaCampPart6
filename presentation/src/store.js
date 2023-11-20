@@ -4,6 +4,8 @@ import mooviessreducer from './reduxLib/mooviesLib';
 import genrereducer from './reduxLib/genreLib';
 import cinemareducer from './reduxLib/cinemaLib';
 import ticketsreducer from './reduxLib/ticketLib';
+import seatreducer from './reduxLib/seatLib';
+import roomsreducer from './reduxLib/roomsLib';
 
 export default configureStore({
     reducer:{
@@ -12,5 +14,7 @@ export default configureStore({
         genrereducer,
         cinemareducer,
         ticketsreducer,
+        seatreducer,
+        roomsreducer,
     }
 });

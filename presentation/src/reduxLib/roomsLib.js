@@ -1,23 +1,28 @@
-import {createAsyncThunk,createSlice} from "@reduxjs/toolkit";
-import {fetchGenres} from "./genreLib";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+
 
 const initialState={
-    ticketList:[],
-    selectedTicket: null,
+    roomList:[],
+    selectedRoom: null,
     registerstatus:'failure',
     editstatus:'failure',
     status:"idle",
     error:''
 }
 
-export const fetchTickets = createAsyncThunk('fetch/genres',async()=>{
-    let response = await fetch('http://localhost:8080/tickets/all')
+export const fetchRooms = createAsyncThunk('fetch/rooms',async()=>{
+    let response = await fetch('http://localhost:8080/rooms/all')
+    return response.json()
+
+})
+export const fetchRoomBYID= createAsyncThunk('fetch/roomsbyID',async(id)=>{
+    let response = await fetch(`http://localhost:8080/rooms/${id}`)
     return response.json()
 
 })
 
-const ticketslice = createSlice({
-    name:"tickets",
+const roomslice = createSlice({
+    name:"rooms",
     initialState,
     reducers:{
         changeRegisterStatus:(state)=>{
@@ -28,31 +33,31 @@ const ticketslice = createSlice({
         }
     },
     extraReducers(builder){
-        builder.addCase(fetchTickets.pending, (state, action) => {
+        builder.addCase(fetchRooms.pending, (state, action) => {
             state.status = 'loading';
         });
-        builder.addCase(fetchTickets.fulfilled, (state, action) => {
+        builder.addCase(fetchRooms.fulfilled, (state, action) => {
             state.status = 'success';
             //state.eventsList = state.eventsList.concat(action.payload);
-            state.ticketList = action.payload;
+            state.roomList = action.payload;
         });
-        builder.addCase(fetchTickets.rejected, (state, action) => {
+        builder.addCase(fetchRooms.rejected, (state, action) => {
             state.status = 'error';
-            state.error = state.error.message || 'Failed to fetch genres';
+            state.error = state.error.message || 'Failed to fetch seats';
         });
-        /* builder.addCase(fetchEventsById.pending, (state, action) => {
+         builder.addCase(fetchRoomBYID.pending, (state, action) => {
              state.status = 'loading';
          });
-         builder.addCase(fetchEventsById.fulfilled, (state, action) => {
+         builder.addCase(fetchRoomBYID.fulfilled, (state, action) => {
              state.status = 'success';
              //state.eventR = state.eventR.concat(action.payload);
-             state.selectedEvent = action.payload;
+             state.selectedRoom = action.payload;
          });
-         builder.addCase(fetchEventsById.rejected, (state, action) => {
+         builder.addCase(fetchRoomBYID.rejected, (state, action) => {
              state.status = 'error';
              state.error = state.error.message || 'Failed to fetch events by ID';
          });
-         builder.addCase(fetchEventsByPublic.pending, (state, action)=>{
+         /*builder.addCase(fetchEventsByPublic.pending, (state, action)=>{
              state.status='loading';
          })
          builder.addCase(fetchEventsByPublic.fulfilled, (state, action)=>{
@@ -110,3 +115,4 @@ const ticketslice = createSlice({
          })*/
     }
 })
+export  default roomslice.reducer;

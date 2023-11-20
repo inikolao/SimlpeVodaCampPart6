@@ -1,30 +1,23 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 
-const initialState = {
-    moovieList: [],
-    moovieListOwn: [],
-    selectedMoovie: null,
+const initialState={
+    seatList:[],
+    selectedSeat: null,
     registerstatus:'failure',
     editstatus:'failure',
     status:"idle",
     error:''
 }
 
-export const fetchMoovies = createAsyncThunk('fetch/movies',async()=>{
-    let response = await fetch('http://localhost:8080/movie/all')
+export const fetchSeats = createAsyncThunk('fetch/seats',async()=>{
+    let response = await fetch('http://localhost:8080/seats/all')
     return response.json()
 
 })
 
-export const fetchMoovieBySeat = createAsyncThunk('fetch/movieBySeatId',async(id)=>{
-    let response = await fetch(`http://localhost:8080/complex/moviebyID/${id}`)
-    return response.json()
-
-})
-
-const moovieslice = createSlice({
-    name:"moovies",
+const seatslice = createSlice({
+    name:"seats",
     initialState,
     reducers:{
         changeRegisterStatus:(state)=>{
@@ -35,31 +28,31 @@ const moovieslice = createSlice({
         }
     },
     extraReducers(builder){
-        builder.addCase(fetchMoovies.pending, (state, action) => {
+        builder.addCase(fetchSeats.pending, (state, action) => {
             state.status = 'loading';
         });
-        builder.addCase(fetchMoovies.fulfilled, (state, action) => {
+        builder.addCase(fetchSeats.fulfilled, (state, action) => {
             state.status = 'success';
             //state.eventsList = state.eventsList.concat(action.payload);
-            state.moovieList = action.payload;
+            state.seatList = action.payload;
         });
-        builder.addCase(fetchMoovies.rejected, (state, action) => {
+        builder.addCase(fetchSeats.rejected, (state, action) => {
             state.status = 'error';
-            state.error = state.error.message || 'Failed to fetch moovies';
+            state.error = state.error.message || 'Failed to fetch seats';
         });
-        builder.addCase(fetchMoovieBySeat.pending, (state, action) => {
-            state.status = 'loading';
-        });
-        builder.addCase(fetchMoovieBySeat.fulfilled, (state, action) => {
-            state.status = 'success';
-            //state.eventR = state.eventR.concat(action.payload);
-            state.selectedMoovie = action.payload;
-        });
-        builder.addCase(fetchMoovieBySeat.rejected, (state, action) => {
-            state.status = 'error';
-            state.error = state.error.message || 'Failed to fetch events by ID';
-        });
-        /* builder.addCase(fetchEventsByPublic.pending, (state, action)=>{
+        /* builder.addCase(fetchEventsById.pending, (state, action) => {
+             state.status = 'loading';
+         });
+         builder.addCase(fetchEventsById.fulfilled, (state, action) => {
+             state.status = 'success';
+             //state.eventR = state.eventR.concat(action.payload);
+             state.selectedEvent = action.payload;
+         });
+         builder.addCase(fetchEventsById.rejected, (state, action) => {
+             state.status = 'error';
+             state.error = state.error.message || 'Failed to fetch events by ID';
+         });
+         builder.addCase(fetchEventsByPublic.pending, (state, action)=>{
              state.status='loading';
          })
          builder.addCase(fetchEventsByPublic.fulfilled, (state, action)=>{
@@ -118,4 +111,4 @@ const moovieslice = createSlice({
     }
 })
 
-export default moovieslice.reducer;
+export default seatslice.reducer;
