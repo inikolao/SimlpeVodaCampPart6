@@ -44,7 +44,7 @@ function App() {
           <Route path='/tickets' element={<Tickets/>}></Route>
           <Route path='/history' element={<History/>}></Route>
           <Route path='/payments' element={<PayementsView/>}></Route>
-          <Route path='/book' element={<BookAMovie/>}></Route>
+          <Route path='/book/:movieid' element={<BookAMovie/>}></Route>
           <Route path='/movieview/:mvid' element={<MoviePresentation/>}></Route>
           {/*<Route path='/eventprofile/:id' element={<Eventprofile/>}></Route>
           <Route path='/edit/:id' element={<EditEvent/>}></Route>*/}

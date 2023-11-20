@@ -11,6 +11,7 @@ function Search() {
     const [movielist,setMovieList]=useState([]);
     const movies=useSelector((state)=>state.mooviessreducer.moovieList);
     const state=useSelector((state) => state.mooviessreducer.state);
+    const [selectedOption, setSelectedOption] = useState('');
 
     useEffect(()=>{
 
@@ -34,6 +35,10 @@ function Search() {
 
     },[dispatch,state]);
 
+    const handleSelectChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
+
     return (
         <div>
             <div className="page-single movie_list">
@@ -45,13 +50,11 @@ function Search() {
                                     <p>Found <span>{movielist.length}</span> in total</p>
                                 }
                                 <label>Sort by:</label>
-                                <select>
-                                    <option value="popularity">Popularity Descending</option>
-                                    <option value="popularity">Popularity Ascending</option>
-                                    <option value="rating">Rating Descending</option>
-                                    <option value="rating">Rating Ascending</option>
-                                    <option value="date">Release date Descending</option>
-                                    <option value="date">Release date Ascending</option>
+                                <select value={selectedOption}
+                                        onChange={handleSelectChange}
+                                >
+                                    <option value="ratingD">Rating Descending</option>
+                                    <option value="ratingA">Rating Ascending</option>
                                 </select>
                                 <a href="movielist.html" className="list"><i
                                     className="ion-ios-list-outline active"></i></a>
@@ -70,7 +73,7 @@ function Search() {
                                             <p>Stars: <a href="#">TBD</a> <a href="#">TBD</a> <a
                                                 href="#">TBD</a></p>
                                             <button
-                                                className="btn btn-light btn-sm deleteUser" data-id={movie.id}>Book A seat</button>
+                                                className="btn btn-light btn-sm deleteUser" data-id={movie.id} onClick={()=>navigate(`/book/${movie.id}`)}>Book A seat</button>
                                         </div>
                                     </div>
                                 ))

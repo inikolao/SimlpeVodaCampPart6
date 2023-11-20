@@ -1,8 +1,15 @@
 import React from 'react';
+import {useParams} from "react-router-dom";
 
-function BookAMovie() {
+function BookAMovie(props) {
+    let {movieID} = useParams();
+    console.log('mID ',movieID);
     return (
-        <div></div>
+        <div className="page-single movie_list">
+            <div className="container">
+            <p>Book A movie</p>
+        </div>
+        </div>
     );
 }
 
