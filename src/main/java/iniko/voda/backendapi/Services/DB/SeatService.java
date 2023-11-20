@@ -32,5 +32,10 @@ public class SeatService {
     {
         return seatRepo.getSeatByRoomSeat_IdAndSeatNo(roomid, seatno);
     }
+    @Transactional
+    public  Seat GetSeatById(int seatid)
+    {
+        return seatRepo.getSeatById(seatid);
+    }
 
 }

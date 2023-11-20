@@ -24,4 +24,9 @@ public class CinemasService {
     {
         cinemaRepo.save(cinema);
     }
+    @Transactional
+    public Cinema getCinemaByRoomID(int roomID)
+    {
+       return cinemaRepo.getCinemaByRooms(roomID);
+    }
 }

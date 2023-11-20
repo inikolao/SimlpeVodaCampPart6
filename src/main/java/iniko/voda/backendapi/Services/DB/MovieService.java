@@ -32,4 +32,10 @@ public class MovieService {
         movieRepo.findAll().forEach(movies::add);
         return movies;
     }
+    @Transactional
+    public Movie GetMovieBYid(int id)
+    {
+        return movieRepo.getMovieById(id);
+
+    }
 }

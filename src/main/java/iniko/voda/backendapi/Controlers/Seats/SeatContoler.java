@@ -18,6 +18,10 @@ public class SeatContoler {
     public List<Seat> GetAllSeats() {
         return seatService.GetAllSeats();
     }
+    @GetMapping("/{id}")
+    public Seat GetSeatByid(@PathVariable String id) {
+        return seatService.GetSeatById(Integer.parseInt(id));
+    }
     @GetMapping("/List")
     public List<Seat> GetSeatsList(@RequestParam(name = "roomid") int roomid) {
         return seatService.GetSeatByRoommId(roomid);

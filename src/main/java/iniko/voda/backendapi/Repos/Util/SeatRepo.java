@@ -9,4 +9,6 @@ public interface SeatRepo extends JpaRepository<Seat,Integer> {
 
     List<Seat> getSeatByRoomSeat(int roomid);
     Seat getSeatByRoomSeat_IdAndSeatNo(int roomseat,int seatno);
+
+    Seat getSeatById(int seatId);
 }

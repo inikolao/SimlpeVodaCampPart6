@@ -3,10 +3,7 @@ package iniko.voda.backendapi.Controlers.Movies;
 import iniko.voda.backendapi.DTO.Movie;
 import iniko.voda.backendapi.Services.DB.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -22,5 +19,11 @@ public class MoviesControler {
     public Set<Movie> GetAllMovies()
     {
         return movieService.GetAllMovies();
+    }
+
+    @GetMapping("/{id}")
+    public Movie GetMovieBYId(@PathVariable String movieID)
+    {
+        return movieService.GetMovieBYid(Integer.parseInt(movieID));
     }
 }
