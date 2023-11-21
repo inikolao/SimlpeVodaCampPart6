@@ -38,4 +38,15 @@ public class MovieService {
         return movieRepo.getMovieById(id);
 
     }
+    @Transactional
+    public List<Movie> GetMoviesOrderByRatingAsc()
+    {
+        return movieRepo.findAllByOrderByRatingAsc();
+    }
+    @Transactional
+    public List<Movie> GetMoviesOrderByRatingDesc()
+    {
+        return movieRepo.findAllByOrderByRatingDesc();
+    }
+
 }
