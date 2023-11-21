@@ -4,6 +4,9 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 const initialState = {
     moovieList: [],
     moovieListOwn: [],
+    moovieListDesc: [],
+    moovieListAsc: [],
+    moovieListFiltered: [],
     selectedMoovie: null,
     registerstatus:'failure',
     editstatus:'failure',
@@ -19,6 +22,19 @@ export const fetchMoovies = createAsyncThunk('fetch/movies',async()=>{
 
 export const fetchMoovieBySeat = createAsyncThunk('fetch/movieBySeatId',async(id)=>{
     let response = await fetch(`http://localhost:8080/complex/moviebyID/${id}`)
+    return response.json()
+
+})
+export const fetchMoovieOrderByratingAsc = createAsyncThunk('fetch/movieByRatingAsc',async()=>{
+    let type="asc";
+    let response = await fetch(`http://localhost:8080/movie/byRating/${type}`)
+    return response.json()
+
+})
+
+export const fetchMoovieOrderByratingDesc = createAsyncThunk('fetch/movieByRatingDesc',async()=>{
+    let type="desc";
+    let response = await fetch(`http://localhost:8080/movie/byRating/${type}`)
     return response.json()
 
 })
@@ -59,62 +75,62 @@ const moovieslice = createSlice({
             state.status = 'error';
             state.error = state.error.message || 'Failed to fetch events by ID';
         });
-        /* builder.addCase(fetchEventsByPublic.pending, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingAsc.pending, (state, action)=>{
              state.status='loading';
          })
-         builder.addCase(fetchEventsByPublic.fulfilled, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingAsc.fulfilled, (state, action)=>{
              state.status = 'success';
-             state.selectedEvent = state.selectedEvent.concat(action.payload);
+             state.moovieListAsc = action.payload;
          })
-         builder.addCase(fetchEventsByPublic.rejected, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingAsc.rejected, (state, action)=>{
              state.status='error';
              state.error = state.error.message || 'Failed to fetch event by public flag';
          })
-         builder.addCase(filterEventsByOwnerId.pending, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingDesc.pending, (state, action)=>{
              state.status='loading';
          })
-         builder.addCase(filterEventsByOwnerId.fulfilled, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingDesc.fulfilled, (state, action)=>{
              state.status = 'success';
              //state.selectedEvent = state.selectedEvent.concat(action.payload);
-             state.eventsListOwn=action.payload;
+             state.moovieListDesc=action.payload;
          })
-         builder.addCase(filterEventsByOwnerId.rejected, (state, action)=>{
+         builder.addCase(fetchMoovieOrderByratingDesc.rejected, (state, action)=>{
              state.status='error';
              state.error = state.error.message || 'Failed to fetch event by owner flag';
          })
-         builder.addCase(editEvent.pending, (state, action)=>{
-             state.editstatus='loading';
-         })
-         builder.addCase(editEvent.fulfilled, (state, action)=>{
-             state.editstatus = 'success';
-             //state.selectedEvent = state.selectedEvent.concat(action.payload);
-         })
-         builder.addCase(editEvent.rejected, (state, action)=>{
-             state.editstatus='error';
-             state.error = state.error.message || 'Failed to edit event by id flag';
-         })
-         builder.addCase(deleteEvent.pending, (state, action)=>{
-             state.editstatus='loading';
-         })
-         builder.addCase(deleteEvent.fulfilled, (state, action)=>{
-             state.editstatus = 'success';
-             //state.selectedEvent = state.selectedEvent.concat(action.payload);
-         })
-         builder.addCase(deleteEvent.rejected, (state, action)=>{
-             state.editstatus='error';
-             state.error = state.error.message || 'Failed to delete event';
-         })
-         builder.addCase(addEvent.pending, (state, action)=>{
-             state.registerstatus='loading';
-         })
-         builder.addCase(addEvent.fulfilled, (state, action)=>{
-             state.registerstatus = 'success';
-             //state.selectedEvent = state.selectedEvent.concat(action.payload);
-         })
-         builder.addCase(addEvent.rejected, (state, action)=>{
-             state.registerstatus='error';
-             state.error = state.error.message || 'Failed to add event';
-         })*/
+        /*  builder.addCase(editEvent.pending, (state, action)=>{
+              state.editstatus='loading';
+          })
+          builder.addCase(editEvent.fulfilled, (state, action)=>{
+              state.editstatus = 'success';
+              //state.selectedEvent = state.selectedEvent.concat(action.payload);
+          })
+          builder.addCase(editEvent.rejected, (state, action)=>{
+              state.editstatus='error';
+              state.error = state.error.message || 'Failed to edit event by id flag';
+          })
+          builder.addCase(deleteEvent.pending, (state, action)=>{
+              state.editstatus='loading';
+          })
+          builder.addCase(deleteEvent.fulfilled, (state, action)=>{
+              state.editstatus = 'success';
+              //state.selectedEvent = state.selectedEvent.concat(action.payload);
+          })
+          builder.addCase(deleteEvent.rejected, (state, action)=>{
+              state.editstatus='error';
+              state.error = state.error.message || 'Failed to delete event';
+          })
+          builder.addCase(addEvent.pending, (state, action)=>{
+              state.registerstatus='loading';
+          })
+          builder.addCase(addEvent.fulfilled, (state, action)=>{
+              state.registerstatus = 'success';
+              //state.selectedEvent = state.selectedEvent.concat(action.payload);
+          })
+          builder.addCase(addEvent.rejected, (state, action)=>{
+              state.registerstatus='error';
+              state.error = state.error.message || 'Failed to add event';
+          })*/
     }
 })
 
