@@ -7,9 +7,12 @@ const initialState = {
     moovieListDesc: [],
     moovieListAsc: [],
     moovieListFiltered: [],
+    moovieListByGenre: [],
+    moovieListResults: [],
     selectedMoovie: null,
     registerstatus:'failure',
     editstatus:'failure',
+    searchStatus: 'faliure',
     status:"idle",
     error:''
 }
@@ -36,6 +39,29 @@ export const fetchMoovieOrderByratingDesc = createAsyncThunk('fetch/movieByRatin
     let type="desc";
     let response = await fetch(`http://localhost:8080/movie/byRating/${type}`)
     return response.json()
+
+})
+
+export const fetchMoovieByGenre = createAsyncThunk('fetch/movieByGenre',async(genre)=>{
+    let response = await fetch(`http://localhost:8080/movie/bygenre/${genre}`)
+    return response.json()
+
+})
+
+export const searchMovie=createAsyncThunk('fetch/results', async(search)=> {
+    let response = await fetch(`http://localhost:8080/movie/search/`,
+        {
+            method:'POST',
+            body: JSON.stringify(search),
+            headers:{
+                'Content-Type' : 'application/json',
+                // 'Access-Control-Allow-Origin' : 'true'
+            }
+        })
+        let data = await response.json();
+        if(data !== null || data !== undefined)
+            return Promise.resolve('success')
+        return Promise.reject('failure')
 
 })
 
@@ -98,29 +124,31 @@ const moovieslice = createSlice({
              state.status='error';
              state.error = state.error.message || 'Failed to fetch event by owner flag';
          })
-        /*  builder.addCase(editEvent.pending, (state, action)=>{
+          builder.addCase(fetchMoovieByGenre.pending, (state, action)=>{
               state.editstatus='loading';
           })
-          builder.addCase(editEvent.fulfilled, (state, action)=>{
+          builder.addCase(fetchMoovieByGenre.fulfilled, (state, action)=>{
               state.editstatus = 'success';
+              state.moovieListByGenre=action.payload;
               //state.selectedEvent = state.selectedEvent.concat(action.payload);
           })
-          builder.addCase(editEvent.rejected, (state, action)=>{
+          builder.addCase(fetchMoovieByGenre.rejected, (state, action)=>{
               state.editstatus='error';
-              state.error = state.error.message || 'Failed to edit event by id flag';
+              state.error = state.error.message || 'Failed to get movies by rating';
           })
-          builder.addCase(deleteEvent.pending, (state, action)=>{
-              state.editstatus='loading';
+         builder.addCase(searchMovie.pending, (state, action)=>{
+              state.searchStatus='loading';
           })
-          builder.addCase(deleteEvent.fulfilled, (state, action)=>{
-              state.editstatus = 'success';
+          builder.addCase(searchMovie.fulfilled, (state, action)=>{
+              state.searchStatus = 'success';
+              state.moovieListResults=action.payload
               //state.selectedEvent = state.selectedEvent.concat(action.payload);
           })
-          builder.addCase(deleteEvent.rejected, (state, action)=>{
-              state.editstatus='error';
-              state.error = state.error.message || 'Failed to delete event';
+          builder.addCase(searchMovie.rejected, (state, action)=>{
+              state.searchStatus='error';
+              state.error = state.error.message || 'Failed to get search results';
           })
-          builder.addCase(addEvent.pending, (state, action)=>{
+          /*  builder.addCase(addEvent.pending, (state, action)=>{
               state.registerstatus='loading';
           })
           builder.addCase(addEvent.fulfilled, (state, action)=>{
