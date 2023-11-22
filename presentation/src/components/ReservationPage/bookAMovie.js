@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchShowsDetailsByMovie} from "../../reduxLib/showsLib";
+import mooviessreducer, {bookMovie} from "../../reduxLib/mooviesLib";
 
 const initialState=
     {
@@ -10,8 +11,10 @@ const initialState=
         roomId:"",
         roomNo:"",
         movieName:"",
-        cost:"",
+        price:"",
+        seatsAvaliable:"",
         seatNo:"",
+        owner:"",
     }
 
 function BookAMovie() {
@@ -24,6 +27,7 @@ function BookAMovie() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const state=useSelector((state) => state.showsreducer.statusR);
+    const rstatus=useSelector((state) => state.mooviessreducer.registerstatus);
     const shows=useSelector((state) => state.showsreducer.showsList);
     const [showslist,setShowsList]=useState([]);
 
@@ -54,15 +58,24 @@ function BookAMovie() {
             setShowsList(shows);
             console.log("not disp ",showslist);
         }
+        if(rstatus === 'success'){
+            alert('Book successful')
+            navigate('/tickets')
+        }
 
 
 
-    },[dispatch,state]);
+    },[dispatch,state,rstatus]);
 
     const handleSubmit = (event)=> {
         event.preventDefault();
-        //ticketB.cinemaId=selectedOption;
+        console.log("jsR : "+JSON.parse(selectedOption));
+        setTicketB(JSON.parse(selectedOption));
+        ticketB.seatNo=selectedSeat;
+        ticketB.owner=sessionStorage.getItem('username').toString();
         console.log("submit : "+ticketB);
+        console.log("submit S: "+selectedSeat);
+        dispatch(bookMovie(ticketB))
     }
 
     const handleSelectChange = (e) => {
@@ -81,7 +94,7 @@ function BookAMovie() {
     };
     const handleselectedSeat= (e) => {
 
-        selectedSeat(e.target.valueOf);
+        setselectedSeat(e.target.value);
     };
 
     function ShowDetails(props)
@@ -97,7 +110,7 @@ function BookAMovie() {
                 <p>Cinema Name: {dx.cinemaName}</p>
                 <p>Movie Name: {dx.movieName}</p>
                 <p>Price: {dx.price}</p>
-                <p>Room ID: {dx.roomId}</p>
+                <p>Room ID: {dx.roomID}</p>
                 <p>Room No: {dx.roomNo}</p>
                 <p>seatsAvaliable: {dx.seatsAvaliable}</p>
 

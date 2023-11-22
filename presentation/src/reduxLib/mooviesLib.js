@@ -66,6 +66,24 @@ export const searchMovie=createAsyncThunk('fetch/results', async(search)=> {
 
 })
 
+export const bookMovie=createAsyncThunk('fetch/bookMovie', async(search)=> {
+    let response = await fetch(`http://localhost:8080/complex/bookMovie`,
+        {
+            method:'POST',
+            body: JSON.stringify(search),
+            headers:{
+                'Content-Type' : 'application/json',
+                // 'Access-Control-Allow-Origin' : 'true'
+            }
+        })
+    return await response.json();
+     let data = await response.json();
+     if(data !== null || data !== undefined)
+         return Promise.resolve('success')
+     return Promise.reject('failure')
+
+})
+
 const moovieslice = createSlice({
     name:"moovies",
     initialState,
@@ -149,17 +167,17 @@ const moovieslice = createSlice({
               state.searchStatus='error';
               state.error = state.error.message || 'Failed to get search results';
           })
-          /*  builder.addCase(addEvent.pending, (state, action)=>{
+            builder.addCase(bookMovie.pending, (state, action)=>{
               state.registerstatus='loading';
           })
-          builder.addCase(addEvent.fulfilled, (state, action)=>{
+          builder.addCase(bookMovie.fulfilled, (state, action)=>{
               state.registerstatus = 'success';
               //state.selectedEvent = state.selectedEvent.concat(action.payload);
           })
-          builder.addCase(addEvent.rejected, (state, action)=>{
+          builder.addCase(bookMovie.rejected, (state, action)=>{
               state.registerstatus='error';
-              state.error = state.error.message || 'Failed to add event';
-          })*/
+              state.error = state.error.message || 'Failed to book';
+          })
     }
 })
 
