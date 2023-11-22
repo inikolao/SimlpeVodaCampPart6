@@ -35,6 +35,7 @@ function Search() {
     const moviesasc=useSelector((state) => state.mooviessreducer.moovieListAsc);
     const moviesDesc=useSelector((state) => state.mooviessreducer.moovieListDesc);
     const moviesByGenre=useSelector((state) => state.mooviessreducer.moovieListByGenre);
+    const moviesRes=useSelector((state) => state.mooviessreducer.moovieListResults);
 
 
 
@@ -143,7 +144,7 @@ function Search() {
                   }*/
             }
         } else {
-            dispatchSR(searchMovie(search)).then((action) => {
+            dispatch(searchMovie(search)).then((action) => {
                 // Once the action is fulfilled, set the eventprofile state
                 if (action.payload) {
                     setMovieSearchR(action.payload);
@@ -222,9 +223,9 @@ function Search() {
         dispatchSR(searchMovie(search)).then((action) => {
             // Once the action is fulfilled, set the eventprofile state
             if (action.payload) {
-                setMovieSearchR(action.payload);
+                setMovieList(action.payload);
                 console.log("playload ", action.payload);
-                console.log("playload E", movieSearchR);
+                console.log("playload E", movielist);
             }
         });
         setSelectedSearch("1");

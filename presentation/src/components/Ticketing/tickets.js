@@ -119,7 +119,7 @@ function Tickets() {
         <div>
             <div className="page-single movie_list">
                 <div className="container">
-                    <h1 className="sb-title">New ticket</h1>
+                   {/* <h1 className="sb-title">New ticket</h1>
                     <p style={{color: 'red'}}>{error && error}</p>
                     <form className="form-style-1">
                         <div className="form-group">
@@ -148,7 +148,7 @@ function Tickets() {
                         </div>
 
                         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
-                    </form>
+                    </form>*/}
                 <p>My Tickets</p>
                     <table className="table">
                         <thead>
@@ -157,7 +157,7 @@ function Tickets() {
                             <th>Cost</th>
                             <th>Seat No</th>
                             <th>Movie</th>
-                            <th>Movie</th>
+                            <th>Cinema</th>
                         </tr>
                         </thead>
                         {

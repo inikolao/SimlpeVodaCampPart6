@@ -6,6 +6,7 @@ import cinemareducer from './reduxLib/cinemaLib';
 import ticketsreducer from './reduxLib/ticketLib';
 import seatreducer from './reduxLib/seatLib';
 import roomsreducer from './reduxLib/roomsLib';
+import showsreducer from './reduxLib/showsLib';
 
 export default configureStore({
     reducer:{
@@ -16,5 +17,6 @@ export default configureStore({
         ticketsreducer,
         seatreducer,
         roomsreducer,
+        showsreducer,
     }
 });

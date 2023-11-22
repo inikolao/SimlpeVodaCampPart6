@@ -58,10 +58,11 @@ export const searchMovie=createAsyncThunk('fetch/results', async(search)=> {
                 // 'Access-Control-Allow-Origin' : 'true'
             }
         })
-        let data = await response.json();
+    return await response.json();
+       /* let data = await response.json();
         if(data !== null || data !== undefined)
             return Promise.resolve('success')
-        return Promise.reject('failure')
+        return Promise.reject('failure')*/
 
 })
 
