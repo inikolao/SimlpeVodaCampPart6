@@ -2,6 +2,8 @@ package iniko.voda.backendapi.Controlers.Movies;
 
 import iniko.voda.backendapi.DTO.Genre;
 import iniko.voda.backendapi.DTO.Movie;
+import iniko.voda.backendapi.DTO.Reservation;
+import iniko.voda.backendapi.DTO.Utils.ShowDetails;
 import iniko.voda.backendapi.PoJo.Utils.special.Playload;
 import iniko.voda.backendapi.PoJo.Utils.special.SearchRequest;
 import iniko.voda.backendapi.Services.DB.MovieService;
@@ -122,4 +124,6 @@ public class MoviesControler {
         }
         return rmovies;
     }
+
+
 }

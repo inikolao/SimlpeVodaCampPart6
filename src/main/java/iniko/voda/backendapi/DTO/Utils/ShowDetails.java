@@ -18,5 +18,7 @@ public class ShowDetails implements Serializable {
     private String roomNo;
     private int cinemaId;
     private int roomID;
+    private String owner;
+    private String seatNo;
 
 }

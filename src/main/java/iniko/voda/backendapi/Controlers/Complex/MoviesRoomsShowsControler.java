@@ -1,15 +1,18 @@
 package iniko.voda.backendapi.Controlers.Complex;
 
-import iniko.voda.backendapi.DTO.Cinema;
-import iniko.voda.backendapi.DTO.Movie;
-import iniko.voda.backendapi.DTO.MoviesShow;
-import iniko.voda.backendapi.DTO.Room;
+import iniko.voda.backendapi.DTO.*;
 import iniko.voda.backendapi.DTO.Utils.Seat;
 import iniko.voda.backendapi.DTO.Utils.ShowDetails;
+import iniko.voda.backendapi.PoJo.Utils.special.Playload;
 import iniko.voda.backendapi.Services.DB.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +25,12 @@ public class MoviesRoomsShowsControler {
 
     @Autowired
     MovieService movieService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ReservationService reservationService;
 
     @Autowired
     RoomService roomService;
@@ -70,6 +79,29 @@ public class MoviesRoomsShowsControler {
         return showDetailsList;
     }
 
+    @PostMapping(value = "/bookMovie",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Playload BookMovieWITHSeatNo(@RequestBody ShowDetails details, @RequestHeader HttpHeaders headers)
+    {
+        Reservation reservation=new Reservation();
+        try {
+            User owner=userService.findByUsername(details.getOwner());
+            reservation.setOwner(owner);
+            int roomid=details.getRoomID();
+            reservation.setCost(moviesShowService.GetTicketPriceByrShowId(roomid));
+            Seat seat=seatService.GetSeatByRoomAndNo(roomid,Integer.parseInt(details.getSeatNo()));
+            seat.setReserved(true);
+            seatService.CreateSeat(seat);
+            reservation.setSeat(seat);
+            reservation.setCreationTimestamp(GetNowL());
+            reservationService.CreateReservation(reservation);
+            return new Playload(LocalDateTime.now(),"OK",null,0);
+        } catch (Exception e) {
+            return new Playload(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR.toString(),"Exception to insert",1);
+        }
+
+
+    }
+
     private Cinema GetCinemaByRoomID(int id)
     {
         Room room=roomService.GetRoomById(id);
@@ -90,6 +122,12 @@ public class MoviesRoomsShowsControler {
         }
 
         return rcinema;
+    }
+
+    private LocalDateTime GetNowL()
+    {
+        Instant inst = Instant.now();
+        return LocalDateTime.now();
     }
 
 }
