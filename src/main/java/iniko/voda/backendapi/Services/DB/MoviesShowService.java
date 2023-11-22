@@ -38,4 +38,9 @@ public class MoviesShowService {
         MoviesShow show=moviesShowRepo.findMoviesShowByRoom_Id(id);
         return moviesShowRepo.findMoviesShowByRoom_Id(id).getTicketPrice();
     }
+    @Transactional
+    public List<MoviesShow> GetShowsByMovieId(int Id)
+    {
+        return moviesShowRepo.getMoviesShowByMovieId(Id);
+    }
 }
