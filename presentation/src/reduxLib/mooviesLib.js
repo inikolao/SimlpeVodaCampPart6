@@ -23,6 +23,12 @@ export const fetchMoovies = createAsyncThunk('fetch/movies',async()=>{
 
 })
 
+export const fetchMooviesByID = createAsyncThunk('fetch/moviesbyID',async(id)=>{
+    let response = await fetch(`http://localhost:8080/movie/${id}}`)
+    return response.json()
+
+})
+
 export const fetchMoovieBySeat = createAsyncThunk('fetch/movieBySeatId',async(id)=>{
     let response = await fetch(`http://localhost:8080/complex/moviebyID/${id}`)
     return response.json()
@@ -117,6 +123,18 @@ const moovieslice = createSlice({
             state.selectedMoovie = action.payload;
         });
         builder.addCase(fetchMoovieBySeat.rejected, (state, action) => {
+            state.status = 'error';
+            state.error = state.error.message || 'Failed to fetch events by ID';
+        });
+        builder.addCase(fetchMooviesByID.pending, (state, action) => {
+            state.status = 'loading';
+        });
+        builder.addCase(fetchMooviesByID.fulfilled, (state, action) => {
+            state.status = 'success';
+            //state.eventR = state.eventR.concat(action.payload);
+            state.selectedMoovie = action.payload;
+        });
+        builder.addCase(fetchMooviesByID.rejected, (state, action) => {
             state.status = 'error';
             state.error = state.error.message || 'Failed to fetch events by ID';
         });

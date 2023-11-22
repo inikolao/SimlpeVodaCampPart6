@@ -20,6 +20,8 @@ import PayementsView from "./components/PaymentsPages/payementsView";
 import BookAMovie from "./components/ReservationPage/bookAMovie";
 import MoviePresentation from "./components/moviePages/moviePresentation";
 import Reservations from "./components/ReservationPage/reservations";
+import AddGenre from "./components/UserPage/AdminComponents/MenuPages/addGenre";
+import EditMovie from "./components/UserPage/AdminComponents/MenuPages/editMovie";
 
 
 function App() {
@@ -46,8 +48,12 @@ function App() {
           <Route path='/payments' element={<PayementsView/>}></Route>
           <Route path='/book/:movieid' element={<BookAMovie/>}></Route>
           <Route path='/movieview/:mvid' element={<MoviePresentation/>}></Route>
+          <Route path='/admin/genreadd' element={<AddGenre/>}></Route>
+          <Route path='/admin/editMovie/:movieid' element={<EditMovie/>}></Route>
           {/*<Route path='/eventprofile/:id' element={<Eventprofile/>}></Route>
-          <Route path='/edit/:id' element={<EditEvent/>}></Route>*/}
+          <Route path='/edit/:id' element={<EditEvent/>}></Route>
+          /admin/editMovie
+          */}
         </Routes>
       </BrowserRouter>
 

@@ -68,7 +68,7 @@ function AdminMovies() {
                             <td text={movie.name}>TBDeveloped</td>
                             <td>
                                 <a
-                                    className="btn btn-light btn-sm deleteUser" data-id={movie.id}>Edit</a>
+                                    className="btn btn-light btn-sm deleteUser" data-id={movie.id} >Edit</a>
                                 <a
                                     className="btn btn-danger btn-sm deleteUser" data-id={movie.id}>Delete</a>
 

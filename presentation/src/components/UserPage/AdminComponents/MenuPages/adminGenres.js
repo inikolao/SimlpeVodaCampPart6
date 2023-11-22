@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchGenres} from "../../../../reduxLib/genreLib";
 
+
+
 function AdminGenres() {
 
     const dispatch = useDispatch();
@@ -36,7 +38,7 @@ function AdminGenres() {
     return (
         <div>
             <h2>Genre Management</h2>
-            <p><button onClick={() => navigate(`/genreadd`)}>Add New Genre</button></p>
+            <p><button onClick={() => navigate(`/admin/genreadd`)}>Add New Genre</button></p>
             <form className="form-inline" action="" method="post">
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">
